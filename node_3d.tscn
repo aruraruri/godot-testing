@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0lq8tjh4jeiw"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4xowi"]
+
+[sub_resource type="Environment" id="Environment_4xowi"]
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_a202f"]
+
+[sub_resource type="Compositor" id="Compositor_noarx"]
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(227.819, 0, 0, 0, 227.819, 0, 0, 0, 227.819, 0, 0, 0)
+metadata/model = SubResource("PlaneMesh_4xowi")
+metadata/trans = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4xowi")
+camera_attributes = SubResource("CameraAttributesPhysical_a202f")
+compositor = SubResource("Compositor_noarx")

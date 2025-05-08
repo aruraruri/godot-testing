@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://djm2cyv8isoy1"]
+
+[ext_resource type="Script" uid="uid://bqa785j4wxe8r" path="res://LabelScript.cs" id="1_wtcfe"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 234.0
+offset_top = 138.0
+offset_right = 424.0
+offset_bottom = 164.0
+text = "WUWUUWUWUWUWUW"
+script = ExtResource("1_wtcfe")
+Speed = 2280
+
+[node name="Node" type="Node" parent="."]
