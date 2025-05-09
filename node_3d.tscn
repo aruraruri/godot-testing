@@ -41,7 +41,7 @@ adjustment_contrast = 1.1
 [node name="Node3D" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.5, -0.433013, 0.75, 8.56817e-08, 0.866025, 0.5, -0.866025, 0.25, -0.433013, 19.7462, 16.1175, -11.1253)
+transform = Transform3D(-0.5, -0.433013, 0.75, 8.56817e-08, 0.866025, 0.5, -0.866025, 0.25, -0.433013, 27.7505, 21.4537, -15.7466)
 fov = 12.4
 size = 10.319
 near = 0.006
@@ -61,13 +61,13 @@ shadow_enabled = true
 transform = Transform3D(35.7, 0, 0, 0, 3, 0, 0, 0, 42, -0.495604, -1.9, 3.87806)
 
 [node name="Node3D2" parent="." instance=ExtResource("1_a202f")]
-transform = Transform3D(7.824, 0, -0.776457, 0, 3, 0, 2.09643, 0, 2.89778, 0.639265, 1.1, 14.5906)
+transform = Transform3D(7.824, 0, -0.776457, 0, 3, 0, 2.09643, 0, 2.89778, 6.55848, 1.1, 10.4465)
 
 [node name="Node3D3" parent="." instance=ExtResource("1_a202f")]
-transform = Transform3D(4.13664, 0, 3.47106, 0, 5.4, 0, -3.47106, 0, 4.13664, -5.20317, 1.1, 13.0478)
+transform = Transform3D(4.13664, 0, 3.47106, 0, 5.4, 0, -3.47106, 0, 4.13664, 0.716044, 1.1, 8.90376)
 
 [node name="Node3D4" parent="." instance=ExtResource("1_a202f")]
-transform = Transform3D(5.79129, 0, 4.85946, 0, 7.56, 0, -4.85946, 0, 5.79129, -13.4552, 3.5, 5.68369)
+transform = Transform3D(5.79129, 0, 4.85946, 0, 7.56, 0, -4.85946, 0, 5.79129, -9.69874, 3.5, 1.53279)
 
 [node name="Character" parent="." instance=ExtResource("2_noarx")]
 transform = Transform3D(0.600428, 0, 0, 0, 0.600428, 0, 0, 0, 0.600428, -0.860572, -0.429708, -0.0300082)
