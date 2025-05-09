@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://nsyfrk2tvmrs"]
+
+[ext_resource type="PackedScene" uid="uid://ccc1y6igt31gn" path="res://char1_arma.blend" id="1_1l1n4"]
+[ext_resource type="Script" uid="uid://colvjmf78asxk" path="res://character/character.gd" id="2_hx151"]
+[ext_resource type="Script" uid="uid://bxjgyluhp4f7y" path="res://character/start_ik.gd" id="2_ugqs2"]
+
+[node name="Character" instance=ExtResource("1_1l1n4")]
+script = ExtResource("2_hx151")
+
+[node name="Skeleton3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.250883, 0)
+
+[node name="leftIk" type="SkeletonIK3D" parent="Skeleton3D" index="1"]
+root_bone = &"LeftUpperLeg"
+tip_bone = &"LeftLowerLegTIP"
+use_magnet = true
+magnet = Vector3(20, 10, 0)
+target_node = NodePath("../../leftIkTarget")
+script = ExtResource("2_ugqs2")
+
+[node name="rightIk" type="SkeletonIK3D" parent="Skeleton3D" index="2"]
+root_bone = &"RightUpperLeg"
+tip_bone = &"RightLowerLegTIP"
+use_magnet = true
+magnet = Vector3(20, 10, 0)
+target_node = NodePath("../../rightIkTarget")
+script = ExtResource("2_ugqs2")
+
+[node name="leftIkTarget" type="Marker3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.339662, 0.34339, -1.02655)
+top_level = true
+
+[node name="rightIkTarget" type="Marker3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34, 0.343, 1.027)
+top_level = true

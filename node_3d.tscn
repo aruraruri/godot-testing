@@ -1,19 +1,73 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0lq8tjh4jeiw"]
+[gd_scene load_steps=10 format=3 uid="uid://b0lq8tjh4jeiw"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_4xowi"]
+[ext_resource type="PackedScene" uid="uid://cqlj8o10f676w" path="res://basic_ahh_box.tscn" id="1_a202f"]
+[ext_resource type="PackedScene" uid="uid://nsyfrk2tvmrs" path="res://character/character.tscn" id="2_noarx"]
+
+[sub_resource type="Gradient" id="Gradient_a202f"]
+colors = PackedColorArray(0.214578, 0.140038, 0.647056, 1, 0.748904, 0.846725, 0.93022, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_noarx"]
+gradient = SubResource("Gradient_a202f")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a0tk4"]
+panorama = SubResource("GradientTexture2D_noarx")
+
+[sub_resource type="Sky" id="Sky_r3fl7"]
+sky_material = SubResource("PanoramaSkyMaterial_a0tk4")
 
 [sub_resource type="Environment" id="Environment_4xowi"]
+sky = SubResource("Sky_r3fl7")
+sky_custom_fov = 180.0
+ambient_light_source = 3
+ambient_light_color = Color(0.4636, 0.61, 0.57584, 1)
+ambient_light_sky_contribution = 0.9
+ambient_light_energy = 3.38
+reflected_light_source = 2
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssao_intensity = 6.17
+ssao_horizon = 0.0
+ssil_enabled = true
+ssil_radius = 1.31
+sdfgi_use_occlusion = true
+fog_enabled = true
+adjustment_contrast = 1.1
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_a202f"]
 
 [sub_resource type="Compositor" id="Compositor_noarx"]
 
 [node name="Node3D" type="Node3D"]
-transform = Transform3D(227.819, 0, 0, 0, 227.819, 0, 0, 0, 227.819, 0, 0, 0)
-metadata/model = SubResource("PlaneMesh_4xowi")
-metadata/trans = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.5, -0.433013, 0.75, 8.56817e-08, 0.866025, 0.5, -0.866025, 0.25, -0.433013, 19.7462, 16.1175, -11.1253)
+fov = 12.4
+size = 10.319
+near = 0.006
+far = 2000.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4xowi")
 camera_attributes = SubResource("CameraAttributesPhysical_a202f")
 compositor = SubResource("Compositor_noarx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1.91566e-08, 0.766044, -0.642788, 2.28299e-08, 0.642788, 0.766044, 1, 0, -2.98023e-08, 2.55827e-07, 6, -13.3545)
+light_energy = 1.46
+shadow_enabled = true
+
+[node name="Node3D" parent="." instance=ExtResource("1_a202f")]
+transform = Transform3D(35.7, 0, 0, 0, 3, 0, 0, 0, 42, -0.495604, -1.9, 3.87806)
+
+[node name="Node3D2" parent="." instance=ExtResource("1_a202f")]
+transform = Transform3D(7.824, 0, -0.776457, 0, 3, 0, 2.09643, 0, 2.89778, 0.639265, 1.1, 14.5906)
+
+[node name="Node3D3" parent="." instance=ExtResource("1_a202f")]
+transform = Transform3D(4.13664, 0, 3.47106, 0, 5.4, 0, -3.47106, 0, 4.13664, -5.20317, 1.1, 13.0478)
+
+[node name="Node3D4" parent="." instance=ExtResource("1_a202f")]
+transform = Transform3D(5.79129, 0, 4.85946, 0, 7.56, 0, -4.85946, 0, 5.79129, -13.4552, 3.5, 5.68369)
+
+[node name="Character" parent="." instance=ExtResource("2_noarx")]
+transform = Transform3D(0.600428, 0, 0, 0, 0.600428, 0, 0, 0, 0.600428, -0.860572, -0.429708, -0.0300082)

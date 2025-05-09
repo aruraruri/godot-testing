@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="learning project"
-run/main_scene="uid://djm2cyv8isoy1"
+run/main_scene="uid://b0lq8tjh4jeiw"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
