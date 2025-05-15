@@ -2,23 +2,23 @@ extends Node3D
 
 @export var move_speed: float = 7.0
 @export var turn_speed: float = 5.0
-@export var ground_offset: float = 0.5
+@export var ground_offset: float = 0.0
 
 @onready var l_leg = $leftIkTarget
 @onready var r_leg = $rightIkTarget
 
 func _process(delta: float) -> void:
-	var plane1 = Plane(global_position ,l_leg.global_position, r_leg.global_position)
-	var plane2 = Plane(Vector3.UP)
-	var avg_normal = ((plane1.normal + plane2.normal ) / 2).normalized()
+	#var plane1 = Plane(global_position ,l_leg.global_position, r_leg.global_position)
+	#var plane2 = Plane(Vector3.UP)
+	#var avg_normal = ((plane1.normal + plane2.normal ) / 2).normalized()
 	
 	var target_basis = _basis_from_normal(Vector3.UP)
 	transform.basis = lerp(transform.basis, target_basis, move_speed * delta).orthonormalized()
 	
 	var avg = (l_leg.position + r_leg.position) / 2
-	var target_pos = avg + transform.basis.y * ground_offset
-	var distance = transform.basis.y.dot(target_pos - position)
-	position = lerp(position, position + transform.basis.y * distance, move_speed * delta)
+	var target_pos = avg 
+	# DIVIDE MOVESPEED BY TWO for player to always be able to overcome this height position by input
+	position = lerp(position, target_pos, (move_speed/2) * delta)
 	
 	_handle_movement(delta)
 	

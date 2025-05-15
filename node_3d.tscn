@@ -50,7 +50,8 @@ near = 0.006
 far = 2000.0
 script = ExtResource("1_r3fl7")
 target = NodePath("../Character")
-target_offset = -44.455
+target_offset_z = -54.18
+target_offset_y = -34.91
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4xowi")
