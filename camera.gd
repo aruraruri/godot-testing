@@ -1,7 +1,7 @@
 extends Camera3D
 
 @export var follow_speed: float = 5.0
-@export var target: Node3D
+@export var target: CharacterBody3D
 @export var target_offset_z: float = 5.0
 @export var target_offset_y: float = 5.0
 
