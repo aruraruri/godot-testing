@@ -53,7 +53,7 @@ func _handle_movement(delta):
 	
 	
 	var look_dir = Input.get_vector("look_left", "look_right", "look_up", "look_down").normalized()
-	var target_angle = atan2(look_dir.x, look_dir.y) - PI/2
+	var target_angle = atan2(look_dir.x, look_dir.y) - PI
 	
 	if (look_dir):
 		rotation.y = lerp_angle(rotation.y, target_angle, turn_speed * delta)

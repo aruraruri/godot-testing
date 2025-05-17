@@ -67,17 +67,16 @@ shadow_enabled = true
 transform = Transform3D(35.7, 0, 0, 0, 3, 0, 0, 0, 42, -0.495604, -1.9, 3.87806)
 
 [node name="Node3D2" parent="." instance=ExtResource("1_a202f")]
-transform = Transform3D(7.824, 0, -0.776457, 0, 3, 0, 2.09643, 0, 2.89778, 6.55848, 0.345037, 10.4465)
+transform = Transform3D(7.824, 0, -0.776457, 0, 3, 0, 2.09643, 0, 2.89778, 6.55848, -0.012568, 10.4465)
 
 [node name="Node3D3" parent="." instance=ExtResource("1_a202f")]
-transform = Transform3D(4.13664, 0, 3.47106, 0, 5.4, 0, -3.47106, 0, 4.13664, 0.716044, 0.239292, 8.90376)
+transform = Transform3D(4.13664, 0, 3.47106, 0, 5.4, 0, -3.47106, 0, 4.13664, 0.716044, -0.126875, 8.90376)
 
 [node name="Node3D4" parent="." instance=ExtResource("1_a202f")]
 transform = Transform3D(5.79129, 0, 4.85946, 0, 7.56, 0, -4.85946, 0, 5.79129, -9.69874, 3.5, 1.53279)
 
 [node name="Character" parent="." instance=ExtResource("2_noarx")]
-transform = Transform3D(0.600428, 0, 0, 0, 0.600428, 0, 0, 0, 0.600428, -0.860572, -0.429708, -0.0300082)
-move_speed = 8.0
+transform = Transform3D(0.600428, 0, 0, 0, 0.600428, 0, 0, 0, 0.600428, -0.860572, 0.0846286, -0.0300082)
 
 [node name="hilltest" parent="." instance=ExtResource("3_a0tk4")]
 transform = Transform3D(0.999543, 0, 0.0302245, 0, 1, 0, -0.0302245, 0, 0.999543, -2.38701, -2.30644, -20.2934)
