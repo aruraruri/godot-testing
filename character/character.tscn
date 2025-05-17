@@ -313,6 +313,72 @@ magnet = Vector3(0, 10, -20)
 target_node = NodePath("../../rightIkTarget")
 script = ExtResource("2_ugqs2")
 
+[node name="SpringBoneSimulator3D_Arm_L" type="SpringBoneSimulator3D" parent="Character/Skeleton3D"]
+setting_count = 1
+settings/0/root_bone_name = "UpperArm_L"
+settings/0/root_bone = 7
+settings/0/end_bone_name = "ArmTip_L"
+settings/0/end_bone = 10
+settings/0/extend_end_bone = false
+settings/0/center_from = 0
+settings/0/individual_config = false
+settings/0/rotation_axis = 3
+settings/0/radius/value = 0.02
+settings/0/radius/damping_curve = null
+settings/0/stiffness/value = 3.3
+settings/0/stiffness/damping_curve = null
+settings/0/drag/value = 0.4
+settings/0/drag/damping_curve = null
+settings/0/gravity/value = 7.03
+settings/0/gravity/damping_curve = null
+settings/0/gravity/direction = Vector3(0, -1, 0)
+settings/0/enable_all_child_collisions = true
+settings/0/exclude_collision_count = 0
+
+[node name="SpringBoneSimulator3D_Arm_R" type="SpringBoneSimulator3D" parent="Character/Skeleton3D"]
+setting_count = 1
+settings/0/root_bone_name = "UpperArm_R"
+settings/0/root_bone = 11
+settings/0/end_bone_name = "ArmTip_R"
+settings/0/end_bone = 14
+settings/0/extend_end_bone = false
+settings/0/center_from = 0
+settings/0/individual_config = false
+settings/0/rotation_axis = 3
+settings/0/radius/value = 0.02
+settings/0/radius/damping_curve = null
+settings/0/stiffness/value = 3.3
+settings/0/stiffness/damping_curve = null
+settings/0/drag/value = 0.4
+settings/0/drag/damping_curve = null
+settings/0/gravity/value = 7.03
+settings/0/gravity/damping_curve = null
+settings/0/gravity/direction = Vector3(0, -1, 0)
+settings/0/enable_all_child_collisions = true
+settings/0/exclude_collision_count = 0
+
+[node name="SpringBoneSimulator3D_Head" type="SpringBoneSimulator3D" parent="Character/Skeleton3D"]
+setting_count = 1
+settings/0/root_bone_name = "Neck"
+settings/0/root_bone = 4
+settings/0/end_bone_name = "Head"
+settings/0/end_bone = 5
+settings/0/extend_end_bone = false
+settings/0/center_from = 0
+settings/0/individual_config = false
+settings/0/rotation_axis = 0
+settings/0/radius/value = 2.995
+settings/0/radius/damping_curve = null
+settings/0/stiffness/value = 7.0
+settings/0/stiffness/damping_curve = null
+settings/0/drag/value = 0.0
+settings/0/drag/damping_curve = null
+settings/0/gravity/value = 7.35
+settings/0/gravity/damping_curve = null
+settings/0/gravity/direction = Vector3(0, -1, 0)
+settings/0/enable_all_child_collisions = true
+settings/0/exclude_collision_count = 0
+
 [node name="leftIkTarget" type="Marker3D" parent="Character" node_paths=PackedStringArray("step_target", "adjacent_target")]
 transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 0.899466, -0.43699, -1.91014e-08, -0.43699, -0.899466, -3.93169e-08, -0.835, 0, -0.496)
 top_level = true
