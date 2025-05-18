@@ -8,17 +8,17 @@
 [sub_resource type="Gradient" id="Gradient_a202f"]
 colors = PackedColorArray(0.214578, 0.140038, 0.647056, 1, 0.748904, 0.846725, 0.93022, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_noarx"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r3fl7"]
 gradient = SubResource("Gradient_a202f")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a0tk4"]
-panorama = SubResource("GradientTexture2D_noarx")
+panorama = SubResource("GradientTexture2D_r3fl7")
 
-[sub_resource type="Sky" id="Sky_r3fl7"]
+[sub_resource type="Sky" id="Sky_jka67"]
 sky_material = SubResource("PanoramaSkyMaterial_a0tk4")
 
 [sub_resource type="Environment" id="Environment_4xowi"]
-sky = SubResource("Sky_r3fl7")
+sky = SubResource("Sky_jka67")
 sky_custom_fov = 180.0
 ambient_light_source = 3
 ambient_light_color = Color(0.4636, 0.61, 0.57584, 1)

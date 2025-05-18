@@ -1,0 +1,100 @@
+[gd_scene load_steps=12 format=3 uid="uid://c4leoci2h131q"]
+
+[ext_resource type="PackedScene" uid="uid://cqlj8o10f676w" path="res://basic_ahh_box.tscn" id="2_od0h0"]
+[ext_resource type="PackedScene" uid="uid://duhwn1fyobuyl" path="res://hilltest.blend" id="3_vt2yd"]
+[ext_resource type="PackedScene" uid="uid://cllqoeeaj2p1l" path="res://demon-rigidbody/demon.tscn" id="4_od0h0"]
+[ext_resource type="PackedScene" uid="uid://cdqauywj4n5rd" path="res://demon-rigidbody/camera.tscn" id="4_vt2yd"]
+
+[sub_resource type="Gradient" id="Gradient_xdpsd"]
+colors = PackedColorArray(0.214578, 0.140038, 0.647056, 1, 0.748904, 0.846725, 0.93022, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_noarx"]
+gradient = SubResource("Gradient_xdpsd")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6ii2q"]
+panorama = SubResource("GradientTexture2D_noarx")
+
+[sub_resource type="Sky" id="Sky_r3fl7"]
+sky_material = SubResource("PanoramaSkyMaterial_6ii2q")
+
+[sub_resource type="Environment" id="Environment_gql8c"]
+sky = SubResource("Sky_r3fl7")
+sky_custom_fov = 180.0
+ambient_light_source = 3
+ambient_light_color = Color(0.4636, 0.61, 0.57584, 1)
+ambient_light_sky_contribution = 0.9
+ambient_light_energy = 3.38
+reflected_light_source = 2
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssao_intensity = 6.17
+ssao_horizon = 0.0
+ssil_enabled = true
+ssil_radius = 1.31
+sdfgi_use_occlusion = true
+fog_enabled = true
+adjustment_contrast = 1.1
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_7aw3l"]
+
+[sub_resource type="Compositor" id="Compositor_ry2yl"]
+
+[node name="Test_area" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gql8c")
+camera_attributes = SubResource("CameraAttributesPhysical_7aw3l")
+compositor = SubResource("Compositor_ry2yl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-1.91566e-08, 0.766044, -0.642788, 2.28299e-08, 0.642788, 0.766044, 1, 0, -2.98023e-08, 2.55827e-07, 6, -13.3545)
+light_energy = 0.595
+shadow_enabled = true
+
+[node name="Node3D" parent="." instance=ExtResource("2_od0h0")]
+transform = Transform3D(35.7, 0, 0, 0, 3, 0, 0, 0, 42, -0.495604, -1.9, 3.87806)
+
+[node name="Node3D2" parent="." instance=ExtResource("2_od0h0")]
+transform = Transform3D(7.824, 0, -0.776457, 0, 3, 0, 2.09643, 0, 2.89778, 6.55848, -0.012568, 10.4465)
+
+[node name="Node3D3" parent="." instance=ExtResource("2_od0h0")]
+transform = Transform3D(4.13664, 0, 3.47106, 0, 5.4, 0, -3.47106, 0, 4.13664, 0.716044, -0.126875, 8.90376)
+
+[node name="Node3D4" parent="." instance=ExtResource("2_od0h0")]
+transform = Transform3D(5.79129, 0, 4.85946, 0, 7.56, 0, -4.85946, 0, 5.79129, -9.69874, 3.5, 1.53279)
+
+[node name="hilltest" parent="." instance=ExtResource("3_vt2yd")]
+transform = Transform3D(0.999543, 0, 0.0302245, 0.010018, 0.943472, -0.331302, -0.028516, 0.331453, 0.94304, -2.38701, -2.30644, -20.2934)
+
+[node name="hilltest2" parent="." instance=ExtResource("3_vt2yd")]
+transform = Transform3D(0.999543, 0, 0.0302245, 0, 1, 0, -0.0302245, 0, 0.999543, 34.4545, -2.30644, -20.2934)
+
+[node name="hilltest3" parent="." instance=ExtResource("3_vt2yd")]
+transform = Transform3D(0.999543, 0, 0.0302245, 0, 1, 0, -0.0302245, 0, 0.999543, -36.6556, -2.30644, -20.2934)
+
+[node name="Demon" parent="." instance=ExtResource("4_od0h0")]
+transform = Transform3D(0.999981, 0, -0.00609103, 0, 1, 0, 0.00609103, 0, 0.999981, -0.107955, -0.59197, -0.397284)
+mass = 600.0
+gravity_scale = 6.0
+inertia = Vector3(0, 0, 0)
+tilt_speed = 5.0
+mass_offset_speed = 0.1
+
+[node name="Camera" parent="." instance=ExtResource("4_vt2yd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.800438, 7.55546, 0.206072)
+
+[node name="Camera3D" parent="Camera" index="0" node_paths=PackedStringArray("target")]
+target = NodePath("../../Demon")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(3.78359, 0, 0, 0, 5.61118, 0, 0, 0, 12.284, 18.7071, 17.8377, -18.8328)
+use_collision = true
+size = Vector3(1, 10, 10)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(3.78359, 0, 0, 0, 5.61118, 0, 0, 0, 12.284, -21.8634, 17.8377, -18.8328)
+use_collision = true
+size = Vector3(1, 10, 10)
+
+[editable path="Camera"]
