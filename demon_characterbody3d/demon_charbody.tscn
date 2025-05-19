@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://cm4ld720sg7ky"]
+[gd_scene load_steps=13 format=4 uid="uid://cm4ld720sg7ky"]
 
 [ext_resource type="Script" uid="uid://c5i4j8lmxinli" path="res://demon_characterbody3d/demon_charbody.gd" id="1_wbgx1"]
 [ext_resource type="Script" uid="uid://bxjgyluhp4f7y" path="res://character/start_ik.gd" id="2_3jh3r"]
@@ -99,6 +99,10 @@ bind/21/pose = Transform3D(0.0544387, -0.835884, 0.546199, 0.219383, -0.523632, 
 bind/22/name = &"LegTip_R"
 bind/22/bone = -1
 bind/22/pose = Transform3D(0.0736368, -0.916258, 0.393763, 1.22935e-07, -0.394835, -0.918752, 0.997285, 0.0676539, -0.0290744, -3.89586, -2.223, -0.815335)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u3xtx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lf6lk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epcar"]
 radius = 1.2
@@ -238,7 +242,7 @@ bones/17/parent = 16
 bones/17/rest = Transform3D(0.512072, 0.825416, -0.237634, -0.858822, 0.487378, -0.15776, -0.0144005, 0.28487, 0.958458, 2.23517e-08, 2.30217, 1.39698e-08)
 bones/17/enabled = true
 bones/17/position = Vector3(2.23517e-08, 2.30217, 1.39698e-08)
-bones/17/rotation = Quaternion(0.128682, -0.0648988, -0.489645, 0.859928)
+bones/17/rotation = Quaternion(0.128682, -0.0648989, -0.489645, 0.859928)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/name = "LegTip_L"
 bones/18/parent = 17
@@ -357,26 +361,45 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="SpringBoneSimulator3D_Head" type="SpringBoneSimulator3D" parent="Armature/Skeleton3D"]
+influence = 0.205
 setting_count = 1
 settings/0/root_bone_name = "Neck"
 settings/0/root_bone = 4
 settings/0/end_bone_name = "Head"
 settings/0/end_bone = 5
-settings/0/extend_end_bone = false
+settings/0/extend_end_bone = true
+settings/0/end_bone/direction = 6
+settings/0/end_bone/length = 0.0
 settings/0/center_from = 0
 settings/0/individual_config = false
 settings/0/rotation_axis = 0
-settings/0/radius/value = 0.0
+settings/0/radius/value = 3.45
 settings/0/radius/damping_curve = null
-settings/0/stiffness/value = 10.1
+settings/0/stiffness/value = 7.02
 settings/0/stiffness/damping_curve = null
-settings/0/drag/value = 0.05
+settings/0/drag/value = 0.0
 settings/0/drag/damping_curve = null
-settings/0/gravity/value = 7.35
+settings/0/gravity/value = 0.8
 settings/0/gravity/damping_curve = null
 settings/0/gravity/direction = Vector3(0, -1, 0)
 settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
+
+[node name="LeftFootBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
+transform = Transform3D(0.054441, -0.219383, -0.974117, 0.835884, -0.523631, 0.164643, -0.546197, -0.823212, 0.154872, -1, -4.15348, -0.156801)
+bone_name = "Foot_L"
+bone_idx = 17
+
+[node name="LeftFootShapeCast3D" type="ShapeCast3D" parent="Armature/Skeleton3D/LeftFootBoneAttachment3D"]
+shape = SubResource("SphereShape3D_u3xtx")
+
+[node name="RightFootBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
+transform = Transform3D(0.0544383, 0.219383, 0.974119, -0.835884, -0.523633, 0.164642, 0.5462, -0.823213, 0.154873, 0.999998, -4.15348, -0.156799)
+bone_name = "Foot_R"
+bone_idx = 21
+
+[node name="RightFootShapeCast3D" type="ShapeCast3D" parent="Armature/Skeleton3D/RightFootBoneAttachment3D"]
+shape = SubResource("SphereShape3D_lf6lk")
 
 [node name="leftLegIKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("step_target", "adjacent_target")]
 transform = Transform3D(1.91068e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, -1.016, 0.294576, -0.02)

@@ -10,6 +10,9 @@ extends CharacterBody3D
 @onready var tilt_target: Marker3D = $Armature/Skeleton3D/bodyTiltTarget
 @onready var mesh: MeshInstance3D = $Armature/Skeleton3D/char_lowpoly
 
+@onready var LfootCast: ShapeCast3D =$Armature/Skeleton3D/LeftFootBoneAttachment3D/LeftFootShapeCast3D
+@onready var RfootCast: ShapeCast3D =$Armature/Skeleton3D/RightFootBoneAttachment3D/RightFootShapeCast3D
+
 
 @export var tilt_limit_right: float = 6.4
 @export var tilt_limit_left: float = -6.4
@@ -25,7 +28,13 @@ func _ready() -> void:
 	
 ### testing tilt manually
 func _handle_tilt(delta: float):
-	if Input.is_action_pressed("tilt_left"):
+	
+	if (LfootCast.collision_result and RfootCast.collision_result):
+		tilt_target.position.y = lerp(tilt_target.position.y, 1.214, 0.05)
+		print("feet on ground")
+	
+	if (!LfootCast.collision_result):
+		print("left foot off ground")
 		if tilt_target.position.y < tilt_limit_left:
 			tilt_target.position.y = tilt_limit_left
 			atLimit = true
@@ -33,8 +42,11 @@ func _handle_tilt(delta: float):
 			tilt_target.position.y -= tilt_speed * delta
 			#center_of_mass.x -= mass_offset_speed
 			atLimit = false
+			
+	
+	if (!RfootCast.collision_result):
+		print("right foot off ground")
 		
-	if Input.is_action_pressed("tilt_right"):
 		if tilt_target.position.y > tilt_limit_right:
 			tilt_target.position.y = tilt_limit_right
 			atLimit = true
