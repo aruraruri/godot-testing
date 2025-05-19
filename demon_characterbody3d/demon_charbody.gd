@@ -15,7 +15,8 @@ extends CharacterBody3D
 
 
 @export var tilt_limit_right: float = 6.4
-@export var tilt_limit_left: float = -6.4
+@export var tilt_limit_left: float = -3.7
+@export var tilt_recovery_lerp_weight = 0.008
 var atLimit: bool = false
 
 var fallen: bool = false
@@ -26,11 +27,11 @@ func _ready() -> void:
 	print(ragdoll)
 	ragdoll.bones_sleep.connect(get_up)
 	
-### testing tilt manually
 func _handle_tilt(delta: float):
 	
 	if (LfootCast.collision_result and RfootCast.collision_result):
-		tilt_target.position.y = lerp(tilt_target.position.y, 1.214, 0.05)
+		# TILT RECOVERY WEIGHT 
+		tilt_target.position.y = lerp(tilt_target.position.y, 1.214, tilt_recovery_lerp_weight)
 		print("feet on ground")
 	
 	if (!LfootCast.collision_result):
