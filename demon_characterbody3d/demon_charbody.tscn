@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://cm4ld720sg7ky"]
+[gd_scene load_steps=11 format=4 uid="uid://cm4ld720sg7ky"]
 
 [ext_resource type="Script" uid="uid://c5i4j8lmxinli" path="res://demon_characterbody3d/demon_charbody.gd" id="1_wbgx1"]
 [ext_resource type="Script" uid="uid://bxjgyluhp4f7y" path="res://character/start_ik.gd" id="2_3jh3r"]
@@ -99,10 +99,6 @@ bind/21/pose = Transform3D(0.0544387, -0.835884, 0.546199, 0.219383, -0.523632, 
 bind/22/name = &"LegTip_R"
 bind/22/bone = -1
 bind/22/pose = Transform3D(0.0736368, -0.916258, 0.393763, 1.22935e-07, -0.394835, -0.918752, 0.997285, 0.0676539, -0.0290744, -3.89586, -2.223, -0.815335)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_u3xtx"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_lf6lk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epcar"]
 radius = 1.2
@@ -390,16 +386,20 @@ transform = Transform3D(0.0544407, -0.219383, -0.974117, 0.835885, -0.523631, 0.
 bone_name = "Foot_L"
 bone_idx = 17
 
-[node name="LeftFootShapeCast3D" type="ShapeCast3D" parent="Armature/Skeleton3D/LeftFootBoneAttachment3D"]
-shape = SubResource("SphereShape3D_u3xtx")
+[node name="LFootRayCast3D" type="RayCast3D" parent="Armature/Skeleton3D/LeftFootBoneAttachment3D"]
+transform = Transform3D(1, 0, -1.67856e-14, 0, 1, 0, -9.3673e-16, 0, 1, 0.244, 0, 0)
+target_position = Vector3(-0.745, 0, 0)
+hit_from_inside = true
 
 [node name="RightFootBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
 transform = Transform3D(0.0544383, 0.219383, 0.974119, -0.835884, -0.523633, 0.164642, 0.5462, -0.823213, 0.154873, 0.999998, -4.15348, -0.156799)
 bone_name = "Foot_R"
 bone_idx = 21
 
-[node name="RightFootShapeCast3D" type="ShapeCast3D" parent="Armature/Skeleton3D/RightFootBoneAttachment3D"]
-shape = SubResource("SphereShape3D_lf6lk")
+[node name="RFootRayCast3D" type="RayCast3D" parent="Armature/Skeleton3D/RightFootBoneAttachment3D"]
+transform = Transform3D(1, 0, 8.3267e-16, 0, 1, 7.10543e-15, 9.71445e-17, 0, 1, -0.244, 0, 0)
+target_position = Vector3(0.745, 0, 0)
+hit_from_inside = true
 
 [node name="leftLegIKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("step_target", "adjacent_target")]
 transform = Transform3D(1.91068e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, -1.016, 0.294576, -0.02)

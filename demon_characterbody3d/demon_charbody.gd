@@ -10,8 +10,8 @@ extends CharacterBody3D
 @onready var tilt_target: Marker3D = $Armature/Skeleton3D/bodyTiltTarget
 @onready var mesh: MeshInstance3D = $Armature/Skeleton3D/char_lowpoly
 
-@onready var LfootCast: ShapeCast3D =$Armature/Skeleton3D/LeftFootBoneAttachment3D/LeftFootShapeCast3D
-@onready var RfootCast: ShapeCast3D =$Armature/Skeleton3D/RightFootBoneAttachment3D/RightFootShapeCast3D
+@onready var LfootCast: RayCast3D = $Armature/Skeleton3D/LeftFootBoneAttachment3D/LFootRayCast3D
+@onready var RfootCast: RayCast3D = $Armature/Skeleton3D/RightFootBoneAttachment3D/RFootRayCast3D
 
 
 @export var tilt_limit_right: float = 6.4
@@ -27,14 +27,22 @@ func _ready() -> void:
 	print(ragdoll)
 	ragdoll.bones_sleep.connect(get_up)
 	
+func ground_angle_walkable(normal: Vector3):
+	var difference = normal.dot(Vector3.UP)
+	print(difference)
+	if (difference < 0.5):
+		return true
+	else:
+		return false
+	
 func _handle_tilt(delta: float):
 	
-	if (LfootCast.collision_result and RfootCast.collision_result):
+	if (LfootCast.is_colliding() and RfootCast.is_colliding()):
 		# TILT RECOVERY WEIGHT 
 		tilt_target.position.y = lerp(tilt_target.position.y, 1.214, tilt_recovery_lerp_weight)
 		#print("feet on ground")
 	
-	if (!LfootCast.collision_result):
+	if (!LfootCast.is_colliding() or ground_angle_walkable(LfootCast.get_collision_normal())):
 		#print("left foot off ground")
 		if tilt_target.position.y < tilt_limit_left:
 			tilt_target.position.y = tilt_limit_left
@@ -46,7 +54,8 @@ func _handle_tilt(delta: float):
 			atLimit = false
 			
 	
-	if (!RfootCast.collision_result):
+
+	if (!RfootCast.is_colliding() or ground_angle_walkable(RfootCast.get_collision_normal())):
 		#print("right foot off ground")
 		
 		if tilt_target.position.y > tilt_limit_right:
