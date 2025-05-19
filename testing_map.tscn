@@ -81,7 +81,7 @@ transform = Transform3D(1.17806, -0.0295359, 0.0282748, 0, 2.58722, 0.353344, -0
 [node name="DemonCharbody" parent="." instance=ExtResource("4_h1f8r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4958, -0.395508, 0.246523)
 turn_speed = 3.0
-tilt_speed = 5.0
+tilt_speed = 7.0
 
 [node name="DemonRagdoll" parent="." instance=ExtResource("5_ah52j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.2037, 5.25101, 0.0106316)
