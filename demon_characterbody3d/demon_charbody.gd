@@ -17,6 +17,7 @@ var atLimit: bool = false
 
 var fallen: bool = false
 signal player_fall
+signal player_rise
 	
 ### testing tilt manually
 func _handle_tilt(delta: float):
@@ -56,6 +57,8 @@ func fall():
 	mesh.hide()
 	
 func get_up():
+	if (fallen):
+		emit_signal("player_rise")
 	fallen = false
 	mesh.show()
 
