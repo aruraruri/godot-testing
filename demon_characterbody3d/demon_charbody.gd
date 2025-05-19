@@ -30,7 +30,7 @@ func _ready() -> void:
 func ground_angle_walkable(normal: Vector3):
 	var difference = normal.dot(Vector3.UP)
 	print(difference)
-	if (difference < 0.8):
+	if (difference < 0.5):
 		return true
 	else:
 		return false
