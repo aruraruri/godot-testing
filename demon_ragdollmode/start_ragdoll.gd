@@ -4,12 +4,14 @@ extends Node3D
 var character: CharacterBody3D
 @onready var bones_to_monitor: Array[Node] = find_children("Physical Bone*", "PhysicalBone3D", true, false)
 var active_bones: Array[Node] = []
+@onready var root_ref = $"Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Root"
 
 signal bones_sleep
 
 func _ready() -> void:
-	# disable ragdoll initially
+	# disable and hide ragdoll initially
 	set_physics_process(false)
+	hide()
 	
 	# connect to character fall signal
 	character = get_tree().get_root().get_node("TestingMap/DemonCharbody")
@@ -37,7 +39,7 @@ func handle_fall(velocity) -> void:
 	# apply physics impulse to active bones
 	for i in range(active_bones.size() - 1, -1, -1):
 		var bone = active_bones[i]
-		bone.apply_central_impulse(velocity)
+		bone.apply_central_impulse(velocity*6)
 		print("apply bone impulse on: ", bone)
 	
 
@@ -48,13 +50,14 @@ func _physics_process(delta: float) -> void:
 	
 	for i in range(active_bones.size() - 1, -1, -1):
 		var bone = active_bones[i]
+		# bone activity threshold
 		if bone.get_linear_velocity().length() < 0.01:
 			print("bone removed: ", bone)
 			active_bones.remove_at(i)
 	
 	# maybe want to have a threshold instead -> over half of bones sleeping = bones_sleep
 	if active_bones.is_empty():
-		emit_signal("bones_sleep")
+		emit_signal("bones_sleep", root_ref)
 		print("the bones sleep...")
 		physics_bones.physical_bones_stop_simulation()
 		hide()

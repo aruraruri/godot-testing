@@ -58,9 +58,11 @@ func fall():
 
 	fallen = true
 	mesh.hide()
-	
-func get_up():
-	tilt_target.position.y = 0.0
+
+# reference to PhysicalBones root from signal
+func get_up(root_ref):
+	position = root_ref.position
+	tilt_target.position.y = 1.214
 	atLimit = false
 	fallen = false
 	mesh.show()
