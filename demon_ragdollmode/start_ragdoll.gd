@@ -8,31 +8,38 @@ var active_bones: Array[Node] = []
 signal bones_sleep
 
 func _ready() -> void:
-	PhysicalBone3D
+	# disable ragdoll initially
 	set_physics_process(false)
 	
+	# connect to character fall signal
 	character = get_tree().get_root().get_node("TestingMap/DemonCharbody")
 	character.player_fall.connect(handle_fall)
 	
 	
 func handle_fall(velocity) -> void:
+	print("FALL TRIGGERED FROM player_fall SIGNAL")
+	
 	set_physics_process(true)
+	# transfer ragdoll over to player
 	global_transform = character.transform
+	# show ragdoll
 	show()
+	
+	# start stop sim to reset sim state to standing
 	physics_bones.physical_bones_stop_simulation()
 	physics_bones.physical_bones_start_simulation()
 	
 	print("monitored bones: ", bones_to_monitor)
-	# set bones to active
+	# set bones to active (without duplicate bones_to_monitor was emptying on second fall onwards)
 	active_bones = bones_to_monitor.duplicate()
+	print("ACTIVE BONES: ", active_bones)
 	
+	# apply physics impulse to active bones
 	for i in range(active_bones.size() - 1, -1, -1):
 		var bone = active_bones[i]
 		bone.apply_central_impulse(velocity)
 		print("apply bone impulse on: ", bone)
 	
-	print("ACTIVE BONES: ", active_bones)
-	print("FALL TRIGGERED FROM player_fall SIGNAL")
 
 	
 func _physics_process(delta: float) -> void:
@@ -44,7 +51,8 @@ func _physics_process(delta: float) -> void:
 		if bone.get_linear_velocity().length() < 0.01:
 			print("bone removed: ", bone)
 			active_bones.remove_at(i)
-			
+	
+	# maybe want to have a threshold instead -> over half of bones sleeping = bones_sleep
 	if active_bones.is_empty():
 		emit_signal("bones_sleep")
 		print("the bones sleep...")
