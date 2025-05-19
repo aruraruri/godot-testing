@@ -5,15 +5,15 @@ var character: CharacterBody3D
 @onready var bones_to_monitor: Array[Node] = find_children("Physical Bone*", "PhysicalBone3D", true, false)
 var active_bones: Array[Node] = []
 
-signal bones_sleeping
+signal bones_sleep
 
 func _ready() -> void:
 	PhysicalBone3D
 	set_physics_process(false)
-	print(bones_to_monitor)
+	
 	character = get_tree().get_root().get_node("TestingMap/DemonCharbody")
 	character.player_fall.connect(handle_fall)
-	character.player_rise.connect(handle_rise)
+	
 	
 func handle_fall() -> void:
 	set_physics_process(true)
@@ -21,16 +21,12 @@ func handle_fall() -> void:
 	show()
 	physics_bones.physical_bones_stop_simulation()
 	physics_bones.physical_bones_start_simulation()
-	
+	print("monitored bones: ", bones_to_monitor)
 	# set bones to active
-	active_bones = bones_to_monitor
+	active_bones = bones_to_monitor.duplicate()
 	print("ACTIVE BONES: ", active_bones)
 	print("FALL TRIGGERED FROM player_fall SIGNAL")
-	
-func handle_rise() -> void:
-	hide()
-	physics_bones.physical_bones_stop_simulation()
-	set_physics_process(false)
+
 	
 func _physics_process(delta: float) -> void:
 	
@@ -43,6 +39,10 @@ func _physics_process(delta: float) -> void:
 			active_bones.remove_at(i)
 			
 	if active_bones.is_empty():
-		emit_signal("bones_sleeping")
+		emit_signal("bones_sleep")
 		print("the bones sleep...")
+		physics_bones.physical_bones_stop_simulation()
+		hide()
+		set_physics_process(false)
+		
 	

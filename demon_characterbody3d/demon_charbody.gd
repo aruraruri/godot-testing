@@ -12,12 +12,16 @@ extends CharacterBody3D
 
 
 @export var tilt_limit_right: float = 6.4
-@export var tilt_limit_left: float = -3.7
+@export var tilt_limit_left: float = -6.4
 var atLimit: bool = false
 
 var fallen: bool = false
 signal player_fall
-signal player_rise
+
+func _ready() -> void:
+	var ragdoll = get_tree().get_root().get_node("TestingMap/DemonRagdoll")
+	print(ragdoll)
+	ragdoll.bones_sleep.connect(get_up)
 	
 ### testing tilt manually
 func _handle_tilt(delta: float):
@@ -42,11 +46,10 @@ func _handle_tilt(delta: float):
 	
 	if atLimit:
 		fall() # Turn on physics
-		#physical_bone_simulator_3d.physical_bones_start_simulation()
 		return
 	
-	#physical_bone_simulator_3d.physical_bones_stop_simulation()
-	get_up()
+	# get_up is instead called through ragdoll "bones_sleep" signal
+	#get_up()
 
 func fall():
 	#do once
@@ -57,8 +60,8 @@ func fall():
 	mesh.hide()
 	
 func get_up():
-	if (fallen):
-		emit_signal("player_rise")
+	tilt_target.position.y = 0.0
+	atLimit = false
 	fallen = false
 	mesh.show()
 
