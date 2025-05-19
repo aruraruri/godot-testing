@@ -4,7 +4,7 @@ extends Camera3D
 @export var target_offset_z: float = 5.0
 @export var target_offset_y: float = 5.0
 
-@onready var target: CharacterBody3D = get_tree().get_root().get_node("TestingMap/Demon/CharacterBody3D")
+@onready var target: CharacterBody3D = get_tree().get_root().get_node("TestingMap/DemonCharbody")
 
 
 func _process(delta: float) -> void:

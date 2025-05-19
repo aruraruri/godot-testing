@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cqlj8o10f676w" path="res://basic_ahh_box.tscn" id="2_od0h0"]
 [ext_resource type="PackedScene" uid="uid://duhwn1fyobuyl" path="res://hilltest.blend" id="3_vt2yd"]
-[ext_resource type="PackedScene" uid="uid://cllqoeeaj2p1l" path="res://demon-rigidbody/demon.tscn" id="4_od0h0"]
+[ext_resource type="PackedScene" uid="uid://cllqoeeaj2p1l" path="res://demon-rigidbody/demon_rigid.tscn" id="4_od0h0"]
 [ext_resource type="PackedScene" uid="uid://cdqauywj4n5rd" path="res://demon-rigidbody/camera.tscn" id="4_vt2yd"]
 
 [sub_resource type="Gradient" id="Gradient_xdpsd"]

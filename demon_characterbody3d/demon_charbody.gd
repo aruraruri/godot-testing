@@ -1,21 +1,22 @@
-extends RigidBody3D
+extends CharacterBody3D
 @export var move_speed: float = 5.0
 @export var turn_speed: float = 1.0
 @export var ground_offset: float = 0
 @export var sprint_speed: float = 10.0
 @export var tilt_speed: float = 30
 @export var mass_offset_speed = 0.1
-@onready var left_target: Marker3D = $CharacterBody3D/leftLegIKTarget
-@onready var right_target: Marker3D = $CharacterBody3D/rightLegIKTarget
-@onready var tilt_target: Marker3D = $CharacterBody3D/Armature/Skeleton3D/bodyTiltTarget
-@onready var collision: CollisionShape3D = $RigidCollisionShape3D
-@onready var charbody3d: CharacterBody3D = $CharacterBody3D
+@onready var left_target: Marker3D = $leftLegIKTarget
+@onready var right_target: Marker3D = $rightLegIKTarget
+@onready var tilt_target: Marker3D = $Armature/Skeleton3D/bodyTiltTarget
+@onready var mesh: MeshInstance3D = $Armature/Skeleton3D/char_lowpoly
+
 
 @export var tilt_limit_right: float = 6.4
 @export var tilt_limit_left: float = -3.7
 var atLimit: bool = false
-@onready var physical_bone_simulator_3d: PhysicalBoneSimulator3D = $Armature/Skeleton3D/PhysicalBoneSimulator3D
 
+var fallen: bool = false
+signal player_fall
 	
 ### testing tilt manually
 func _handle_tilt(delta: float):
@@ -39,20 +40,32 @@ func _handle_tilt(delta: float):
 			atLimit = false
 	
 	if atLimit:
-		freeze = false # Turn on physics
+		fall() # Turn on physics
 		#physical_bone_simulator_3d.physical_bones_start_simulation()
 		return
 	
 	#physical_bone_simulator_3d.physical_bones_stop_simulation()
-	freeze = true
+	get_up()
+
+func fall():
+	#do once
+	if (!fallen):
+		emit_signal("player_fall")
+
+	fallen = true
+	mesh.hide()
 	
+func get_up():
+	fallen = false
+	mesh.show()
+
 func _handle_movement(delta):
 
 	var input_dir = Input.get_vector("left", "right", "up", "down").normalized()
-	var movement_vector = (Vector3(input_dir.x, ground_offset, input_dir.y))
+	var movement_vector = (Vector3(input_dir.x, 0, input_dir.y))
 	#print(movement_vector)
 	
-	charbody3d.velocity = charbody3d.velocity.lerp(movement_vector * move_speed, 0.5)
+	velocity = velocity.lerp(movement_vector * move_speed, 0.5)
 	#print(velocity)
 	
 	# move rigid body collision along
@@ -64,22 +77,21 @@ func _handle_rotation(delta):
 	var target_angle = atan2(look_dir.x, look_dir.y) - PI
 	
 	if (look_dir):
-		charbody3d.rotation.y = lerp_angle(charbody3d.rotation.y, target_angle, turn_speed * delta)
+		rotation.y = lerp_angle(rotation.y, target_angle, turn_speed * delta)
 
 func _physics_process(delta: float) -> void:
-	if freeze:
+	if !fallen:
 		var avg = (left_target.position + right_target.position) / 2
-		var target_pos = avg 
-	# DIVIDE MOVESPEED BY TWO for player to always be able to overcome this height position set
-		charbody3d.position.y = lerp(charbody3d.position.y, target_pos.y, (move_speed) * delta)
+		var target_pos = avg
+		#charbody3d.position.y = lerp(charbody3d.position.y, target_pos.y, (move_speed) * delta)
 	
 		
-		# height setting
-		#position.y = lerp(position.y, target_pos.y, (move_speed) * delta)
+		#height setting
+		position.y = lerp(position.y, target_pos.y, (move_speed) * delta)
 		_handle_movement(delta)
 		_handle_rotation(delta)
 		
 		
-		charbody3d.move_and_slide()
+		move_and_slide()
 		
 	_handle_tilt(delta)
