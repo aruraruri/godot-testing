@@ -54,7 +54,7 @@ func _handle_tilt(delta: float):
 func fall():
 	#do once
 	if (!fallen):
-		emit_signal("player_fall")
+		emit_signal("player_fall", velocity)
 
 	fallen = true
 	mesh.hide()

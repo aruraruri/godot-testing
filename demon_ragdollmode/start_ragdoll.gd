@@ -15,15 +15,22 @@ func _ready() -> void:
 	character.player_fall.connect(handle_fall)
 	
 	
-func handle_fall() -> void:
+func handle_fall(velocity) -> void:
 	set_physics_process(true)
 	global_transform = character.transform
 	show()
 	physics_bones.physical_bones_stop_simulation()
 	physics_bones.physical_bones_start_simulation()
+	
 	print("monitored bones: ", bones_to_monitor)
 	# set bones to active
 	active_bones = bones_to_monitor.duplicate()
+	
+	for i in range(active_bones.size() - 1, -1, -1):
+		var bone = active_bones[i]
+		bone.apply_central_impulse(velocity)
+		print("apply bone impulse on: ", bone)
+	
 	print("ACTIVE BONES: ", active_bones)
 	print("FALL TRIGGERED FROM player_fall SIGNAL")
 
