@@ -8,7 +8,7 @@ extends Camera3D
 
 
 func _process(delta: float) -> void:
-	print(target)
+	#print(target)
 	if target:
 		# Calculate target position (only X and Z from target, keep camera's current Y)
 		var target_pos = Vector3(target.global_position.x, target.global_position.y - target_offset_y, target.global_position.z - target_offset_z)

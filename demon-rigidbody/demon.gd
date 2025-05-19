@@ -69,9 +69,9 @@ func _handle_rotation(delta):
 func _physics_process(delta: float) -> void:
 	if freeze:
 		var avg = (left_target.position + right_target.position) / 2
-		var target_pos = avg + transform.basis.y * ground_offset
-		var distance = transform.basis.y.dot(target_pos - position)
-		position = lerp(position, position + transform.basis.y * distance, move_speed * delta)
+		var target_pos = avg 
+	# DIVIDE MOVESPEED BY TWO for player to always be able to overcome this height position set
+		charbody3d.position.y = lerp(charbody3d.position.y, target_pos.y, (move_speed) * delta)
 	
 		
 		# height setting
