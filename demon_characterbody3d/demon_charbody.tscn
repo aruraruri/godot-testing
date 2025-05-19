@@ -395,6 +395,7 @@ step_distance = 3.0
 adjacent_target = NodePath("../leftLegIKTarget")
 
 [node name="stepTargetContainer" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.06932)
 script = ExtResource("4_c2hh7")
 
 [node name="leftStepRay" type="RayCast3D" parent="stepTargetContainer" node_paths=PackedStringArray("step_target")]
