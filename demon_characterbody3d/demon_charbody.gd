@@ -18,7 +18,7 @@ extends CharacterBody3D
 @export var tilt_limit_left: float = -3.7
 @export var tilt_recovery_lerp_weight = 0.008
 var atLimit: bool = false
-
+var fall_direction: int
 var fallen: bool = false
 signal player_fall
 
@@ -32,12 +32,13 @@ func _handle_tilt(delta: float):
 	if (LfootCast.collision_result and RfootCast.collision_result):
 		# TILT RECOVERY WEIGHT 
 		tilt_target.position.y = lerp(tilt_target.position.y, 1.214, tilt_recovery_lerp_weight)
-		print("feet on ground")
+		#print("feet on ground")
 	
 	if (!LfootCast.collision_result):
-		print("left foot off ground")
+		#print("left foot off ground")
 		if tilt_target.position.y < tilt_limit_left:
 			tilt_target.position.y = tilt_limit_left
+			fall_direction = -1
 			atLimit = true
 		else:
 			tilt_target.position.y -= tilt_speed * delta
@@ -46,10 +47,11 @@ func _handle_tilt(delta: float):
 			
 	
 	if (!RfootCast.collision_result):
-		print("right foot off ground")
+		#print("right foot off ground")
 		
 		if tilt_target.position.y > tilt_limit_right:
 			tilt_target.position.y = tilt_limit_right
+			fall_direction = 1
 			atLimit = true
 			
 		else:
@@ -67,7 +69,7 @@ func _handle_tilt(delta: float):
 func fall():
 	#do once
 	if (!fallen):
-		emit_signal("player_fall", velocity)
+		emit_signal("player_fall", velocity, fall_direction)
 
 	fallen = true
 	mesh.hide()
