@@ -122,7 +122,7 @@ func _physics_process(delta: float) -> void:
 			var avg = (LfootCast.get_collision_point() + RfootCast.get_collision_point()) / 2
 			var target_pos = avg
 			position.y = lerp(position.y, target_pos.y, 0.1)
-		if not (LfootCast.is_colliding() or RfootCast.is_colliding()):
+		else:
 			print("feet not on ground")
 			_apply_gravity(delta)
 		

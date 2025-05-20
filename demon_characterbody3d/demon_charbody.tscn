@@ -419,7 +419,7 @@ adjacent_target = NodePath("../leftLegIKTarget")
 script = ExtResource("4_c2hh7")
 
 [node name="leftStepRay" type="RayCast3D" parent="stepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, -4.65661e-10, 0, 0, 0.866025, -0.5, 9.31323e-10, 0.5, 0.866026, -0.19, 0.8, 0.415)
+transform = Transform3D(1, -4.65661e-10, 0, 0, 0.866025, -0.5, 9.31323e-10, 0.5, 0.866026, -0.19, 0.725, 0.415)
 target_position = Vector3(0, -2, 0)
 debug_shape_thickness = 5
 script = ExtResource("5_oaojv")
@@ -429,7 +429,7 @@ step_target = NodePath("leftStepTarget")
 transform = Transform3D(1, -4.65661e-10, 0, 6.98492e-10, 1, 0, -1.11022e-16, 1.19209e-07, 1, 0, -0.925, 0)
 
 [node name="rightStepRay" type="RayCast3D" parent="stepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, -4.65661e-10, 0, 0, 0.866025, -0.5, 9.31323e-10, 0.5, 0.866026, 0.19, 0.8, 0.415)
+transform = Transform3D(1, -4.65661e-10, 0, 0, 0.866025, -0.5, 9.31323e-10, 0.5, 0.866026, 0.19, 0.725, 0.415)
 target_position = Vector3(0, -2, 0)
 debug_shape_thickness = 5
 script = ExtResource("5_oaojv")
