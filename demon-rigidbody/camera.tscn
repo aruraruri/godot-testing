@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdqauywj4n5rd"]
+
+[ext_resource type="Script" uid="uid://41o6e4r2so32" path="res://demon-rigidbody/camera_rigidbody.gd" id="1_tupn0"]
+
+[node name="Camera" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, -1.59679, 27.5756, 43.3036)
+fov = 25.8
+size = 10.319
+near = 0.006
+far = 2000.0
+script = ExtResource("1_tupn0")
+target_offset_z = -74.0
+target_offset_y = -48.0
