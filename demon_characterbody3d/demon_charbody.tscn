@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://cm4ld720sg7ky"]
+[gd_scene load_steps=11 format=4 uid="uid://cm4ld720sg7ky"]
 
 [ext_resource type="Script" uid="uid://c5i4j8lmxinli" path="res://demon_characterbody3d/demon_charbody.gd" id="1_wbgx1"]
 [ext_resource type="Script" uid="uid://bxjgyluhp4f7y" path="res://demon_characterbody3d/start_ik.gd" id="2_3jh3r"]
@@ -98,6 +98,8 @@ bind/21/pose = Transform3D(0.0544384, -0.835885, 0.546199, 0.219383, -0.523631, 
 bind/22/name = &"LegTip_R"
 bind/22/bone = -1
 bind/22/pose = Transform3D(0.0736368, -0.916257, 0.393764, 1.95578e-07, -0.394835, -0.918752, 0.997285, 0.0676543, -0.0290746, -0.947712, -0.550487, -0.140539)
+
+[sub_resource type="SphereMesh" id="SphereMesh_wbgx1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epcar"]
 radius = 0.257169
@@ -407,6 +409,10 @@ step_target = NodePath("../stepTargetContainer/leftStepRay/leftStepTarget")
 step_distance = 0.5
 adjacent_target = NodePath("../rightLegIKTarget")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="leftLegIKTarget"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_wbgx1")
+
 [node name="rightLegIKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("step_target", "adjacent_target")]
 transform = Transform3D(1.91068e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0.204822, -0.0480842, -0.0421963)
 top_level = true
@@ -415,12 +421,16 @@ step_target = NodePath("../stepTargetContainer/rightStepRay/rightStepTarget")
 step_distance = 0.5
 adjacent_target = NodePath("../leftLegIKTarget")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="rightLegIKTarget"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_wbgx1")
+
 [node name="stepTargetContainer" type="Node3D" parent="."]
 script = ExtResource("4_c2hh7")
 
 [node name="leftStepRay" type="RayCast3D" parent="stepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, -4.65661e-10, 0, 0, 0.866025, -0.5, 9.31323e-10, 0.5, 0.866026, -0.19, 0.725, 0.415)
-target_position = Vector3(0, -2, 0)
+transform = Transform3D(1, 0, 0, 0, 0.906307, -0.422618, 0, 0.422618, 0.906308, -0.19, 0.725, 0.2)
+target_position = Vector3(0, -10, 0)
 debug_shape_thickness = 5
 script = ExtResource("5_oaojv")
 step_target = NodePath("leftStepTarget")
@@ -429,8 +439,8 @@ step_target = NodePath("leftStepTarget")
 transform = Transform3D(1, -4.65661e-10, 0, 6.98492e-10, 1, 0, -1.11022e-16, 1.19209e-07, 1, 0, -0.925, 0)
 
 [node name="rightStepRay" type="RayCast3D" parent="stepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, -4.65661e-10, 0, 0, 0.866025, -0.5, 9.31323e-10, 0.5, 0.866026, 0.19, 0.725, 0.415)
-target_position = Vector3(0, -2, 0)
+transform = Transform3D(1, 0, 0, 0, 0.906307, -0.422618, 0, 0.422618, 0.906308, 0.19, 0.725, 0.2)
+target_position = Vector3(0, -10, 0)
 debug_shape_thickness = 5
 script = ExtResource("5_oaojv")
 step_target = NodePath("rightStepTarget")
@@ -441,3 +451,7 @@ transform = Transform3D(1, -1.86265e-09, 0, 1.39698e-09, 1, 0, 3.33067e-16, 1.19
 [node name="CharCollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28549, 0)
 shape = SubResource("CapsuleShape3D_epcar")
+
+[node name="FallRayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0017757, 0.846339, 0.0150056)
+target_position = Vector3(0, -20, 0)

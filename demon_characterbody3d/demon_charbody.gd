@@ -13,6 +13,8 @@ extends CharacterBody3D
 @onready var LfootCast: RayCast3D = $Armature/Skeleton3D/LeftFootBoneAttachment3D/LFootRayCast3D
 @onready var RfootCast: RayCast3D = $Armature/Skeleton3D/RightFootBoneAttachment3D/RFootRayCast3D
 
+@onready var fallRay: RayCast3D = $FallRayCast3D
+
 
 @export var tilt_limit_right: float = 6.4
 @export var tilt_limit_left: float = -3.7
@@ -117,16 +119,13 @@ func _apply_gravity(delta):
 
 func _physics_process(delta: float) -> void:
 	if !fallen:
-		#height setting/seeing if at least one foot is on the ground
-		if (LfootCast.is_colliding() or RfootCast.is_colliding()):
-			var avg = (LfootCast.get_collision_point() + RfootCast.get_collision_point()) / 2
-			var target_pos = avg
-			position.y = lerp(position.y, target_pos.y, 0.1)
-		else:
-			print("feet not on ground")
-			_apply_gravity(delta)
+		#height setting with ik targets
 		
+		#var avg = (left_target.position + right_target.position) / 2
+		var target_pos = Vector3(fallRay.get_collision_point().x, fallRay.get_collision_point().y + + ground_offset, fallRay.get_collision_point().z)
+		position.y = lerp(position.y, target_pos.y, 0.1)
 		
+
 		_handle_movement(delta)
 		_handle_rotation(delta)
 		
