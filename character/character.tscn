@@ -1,10 +1,10 @@
 [gd_scene load_steps=14 format=4 uid="uid://nsyfrk2tvmrs"]
 
 [ext_resource type="Script" uid="uid://b7ojjycnuux0x" path="res://character/characterBodyScript.gd" id="1_o6jyn"]
-[ext_resource type="Script" uid="uid://bxjgyluhp4f7y" path="res://character/start_ik.gd" id="2_ugqs2"]
-[ext_resource type="Script" uid="uid://dtud42dsprn5s" path="res://character/step_ray.gd" id="4_hx151"]
-[ext_resource type="Script" uid="uid://bwjv0y665yqcw" path="res://character/ik_target.gd" id="5_0rvpn"]
-[ext_resource type="Script" uid="uid://dn1by1jpygu87" path="res://character/step_target_container.gd" id="5_o6jyn"]
+[ext_resource type="Script" uid="uid://bxjgyluhp4f7y" path="res://demon_characterbody3d/start_ik.gd" id="2_ugqs2"]
+[ext_resource type="Script" uid="uid://dtud42dsprn5s" path="res://demon_characterbody3d/step_ray.gd" id="4_hx151"]
+[ext_resource type="Script" uid="uid://bwjv0y665yqcw" path="res://demon_characterbody3d/ik_target.gd" id="5_0rvpn"]
+[ext_resource type="Script" uid="uid://dn1by1jpygu87" path="res://demon_characterbody3d/step_target_container.gd" id="5_o6jyn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rvpn"]
 radius = 1.2

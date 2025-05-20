@@ -24,12 +24,12 @@ signal player_fall
 
 func _ready() -> void:
 	var ragdoll = get_tree().get_root().get_node("TestingMap/DemonRagdoll")
-	print(ragdoll)
+	#print(ragdoll)
 	ragdoll.bones_sleep.connect(get_up)
 	
 func ground_angle_walkable(normal: Vector3):
 	var difference = normal.dot(Vector3.UP)
-	print(difference)
+	#print(difference)
 	if (difference < 0.5):
 		return true
 	else:
@@ -38,8 +38,8 @@ func ground_angle_walkable(normal: Vector3):
 func _handle_tilt(delta: float):
 	
 	if (LfootCast.is_colliding() and RfootCast.is_colliding()):
-		# TILT RECOVERY WEIGHT 
-		tilt_target.position.y = lerp(tilt_target.position.y, 1.214, tilt_recovery_lerp_weight)
+		# TILT RECOVERY WEIGHT with HARD-CODED ZERO OUT POS
+		tilt_target.position.y = lerp(tilt_target.position.y, 0.0, tilt_recovery_lerp_weight)
 		#print("feet on ground")
 	
 	if (!LfootCast.is_colliding() or ground_angle_walkable(LfootCast.get_collision_normal())):
@@ -110,16 +110,23 @@ func _handle_rotation(delta):
 	
 	if (look_dir):
 		rotation.y = lerp_angle(rotation.y, target_angle, turn_speed * delta)
+		
+
+func _apply_gravity(delta):
+	position.y -= 1.0 * delta
 
 func _physics_process(delta: float) -> void:
 	if !fallen:
-		var avg = (left_target.position + right_target.position) / 2
-		var target_pos = avg
-		#charbody3d.position.y = lerp(charbody3d.position.y, target_pos.y, (move_speed) * delta)
-	
+		#height setting/seeing if at least one foot is on the ground
+		if (LfootCast.is_colliding() or RfootCast.is_colliding()):
+			var avg = (LfootCast.get_collision_point() + RfootCast.get_collision_point()) / 2
+			var target_pos = avg
+			position.y = lerp(position.y, target_pos.y, 0.1)
+		if not (LfootCast.is_colliding() or RfootCast.is_colliding()):
+			print("feet not on ground")
+			_apply_gravity(delta)
 		
-		#height setting
-		position.y = lerp(position.y, target_pos.y, (move_speed) * delta)
+		
 		_handle_movement(delta)
 		_handle_rotation(delta)
 		
