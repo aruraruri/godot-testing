@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=4 uid="uid://cm4ld720sg7ky"]
+[gd_scene load_steps=13 format=4 uid="uid://cm4ld720sg7ky"]
 
 [ext_resource type="Script" uid="uid://c5i4j8lmxinli" path="res://demon_characterbody3d/demon_charbody.gd" id="1_wbgx1"]
 [ext_resource type="Script" uid="uid://bxjgyluhp4f7y" path="res://demon_characterbody3d/start_ik.gd" id="2_3jh3r"]
 [ext_resource type="Material" uid="uid://3mr1jyojeyt3" path="res://demon_characterbody3d/character_mat.tres" id="2_u3xtx"]
 [ext_resource type="Script" uid="uid://bwjv0y665yqcw" path="res://demon_characterbody3d/ik_target.gd" id="3_sbjls"]
 [ext_resource type="Script" uid="uid://dn1by1jpygu87" path="res://demon_characterbody3d/step_target_container.gd" id="4_c2hh7"]
+[ext_resource type="Material" uid="uid://cy8tvk632myjy" path="res://demon_characterbody3d/eye_mat.tres" id="4_lf6lk"]
 [ext_resource type="Script" uid="uid://dtud42dsprn5s" path="res://demon_characterbody3d/step_ray.gd" id="5_oaojv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ahfok"]
@@ -99,6 +100,8 @@ bind/21/pose = Transform3D(0.0544384, -0.835885, 0.546199, 0.219383, -0.523631, 
 bind/22/name = &"LegTip_R"
 bind/22/bone = -1
 bind/22/pose = Transform3D(0.0736368, -0.916257, 0.393764, 1.95578e-07, -0.394835, -0.918752, 0.997285, 0.0676543, -0.0290746, -0.947712, -0.550487, -0.140539)
+
+[sub_resource type="SphereMesh" id="SphereMesh_47ywq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epcar"]
 radius = 0.257169
@@ -421,6 +424,28 @@ transform = Transform3D(1, -2.98023e-08, 2.23517e-08, 2.98023e-08, 1, 0, -1.4901
 target_position = Vector3(0.2, 0, 0)
 hit_from_inside = true
 
+[node name="HeadBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
+transform = Transform3D(-0.00494906, -0.0109127, 0.999928, -0.793928, 0.608005, 0.00270594, -0.607991, -0.793858, -0.0116729, -0.00353681, 0.434075, -0.245615)
+bone_name = "Head"
+bone_idx = 5
+
+[node name="RightEye" type="MeshInstance3D" parent="Armature/Skeleton3D/HeadBoneAttachment3D"]
+transform = Transform3D(-0.000148471, -0.0238178, -0.0182397, -0.000327378, 0.0182402, -0.0238157, 0.0299978, 8.11781e-05, -0.000350185, 0.109, 0.204, 0.063)
+material_override = ExtResource("4_lf6lk")
+mesh = SubResource("SphereMesh_47ywq")
+skeleton = NodePath("../..")
+
+[node name="LeftEye" type="MeshInstance3D" parent="Armature/Skeleton3D/HeadBoneAttachment3D"]
+transform = Transform3D(-0.000148472, -0.0238179, -0.0182397, -0.000327378, 0.0182402, -0.0238157, 0.0299978, 8.11776e-05, -0.000350187, 0.108539, 0.204083, -0.0630119)
+material_override = ExtResource("4_lf6lk")
+mesh = SubResource("SphereMesh_47ywq")
+skeleton = NodePath("../..")
+
+[node name="eye_light" type="OmniLight3D" parent="Armature/Skeleton3D/HeadBoneAttachment3D"]
+transform = Transform3D(-0.00494898, -0.793929, -0.60799, -0.0109126, 0.608004, -0.793859, 0.999928, 0.00270597, -0.0116728, 0.44486, 0.323908, 0.00245021)
+light_energy = 0.3
+omni_range = 1.44069
+
 [node name="leftLegIKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("step_target", "adjacent_target")]
 editor_description = "Targets that leg IK are trying to reach. Moved by script when player global_position too far away."
 transform = Transform3D(1.91068e-15, 4.37114e-08, -1, 1, -4.37114e-08, -6.35275e-21, -4.37114e-08, -1, -4.37114e-08, -0.19, 0, 0)
@@ -472,3 +497,16 @@ shape = SubResource("CapsuleShape3D_epcar")
 [node name="FallRayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0017757, 0.846339, 0.0150056)
 target_position = Vector3(0, -20, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.828696, 0.559699, 0, -0.559699, 0.828696, 0, 1.249, -0.599467)
+light_energy = 1.413
+light_size = 0.253
+shadow_enabled = true
+spot_range = 53.8559
+spot_angle = 70.3125
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.099, 1.624, 0)
+light_energy = 0.3
+omni_range = 1.44069
