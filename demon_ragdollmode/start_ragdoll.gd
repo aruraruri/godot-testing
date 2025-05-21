@@ -7,7 +7,7 @@ var active_bones: Array[Node] = []
 @onready var root_ref = $"Armature/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Root"
 @onready var impulse_ray_left: RayCast3D = $impulseLeft
 @onready var impulse_ray_right: RayCast3D = $impulseRight
-@export var sweep_strenght: float = 100.0
+@export var sweep_strenght: float = 200.0
 
 signal bones_sleep
 
@@ -20,7 +20,7 @@ func _ready() -> void:
 	character.player_fall.connect(handle_fall)
 	
 	
-func handle_fall(velocity, fall_direction) -> void:
+func handle_fall(velocity, fall_direction, forward_dir, up_dir) -> void:
 	print("FALL TRIGGERED FROM player_fall SIGNAL")
 	set_physics_process(true)
 	# transfer ragdoll over to player
@@ -42,13 +42,31 @@ func handle_fall(velocity, fall_direction) -> void:
 	for i in range(active_bones.size() - 1, -1, -1):
 		var bone = active_bones[i]
 		bone.apply_central_impulse(velocity*6)
-	
-	if fall_direction == 1:
-		active_bones[11].apply_central_impulse(Vector3.LEFT * sweep_strenght)
-		active_bones[9].apply_central_impulse(Vector3.LEFT * sweep_strenght)
-	else:
-		active_bones[9].apply_central_impulse(Vector3.RIGHT * sweep_strenght)
-		active_bones[11].apply_central_impulse(Vector3.RIGHT * sweep_strenght)
+		
+	var right_dir = forward_dir.cross(up_dir).normalized()
+	var left_dir = -right_dir
+	var backward_dir = -forward_dir
+
+	match fall_direction:
+		"right":
+			active_bones[11].apply_central_impulse(left_dir * sweep_strenght)
+			active_bones[9].apply_central_impulse(left_dir * sweep_strenght)
+
+		"left":
+			active_bones[9].apply_central_impulse(right_dir * sweep_strenght)
+			active_bones[11].apply_central_impulse(right_dir * sweep_strenght)
+
+		"backward":
+			active_bones[0].apply_central_impulse(up_dir * sweep_strenght)
+			active_bones[3].apply_central_impulse(backward_dir * sweep_strenght)
+			active_bones[3].apply_central_impulse(backward_dir * sweep_strenght)
+			active_bones[2].apply_central_impulse(backward_dir * sweep_strenght)
+			active_bones[9].apply_central_impulse(forward_dir * sweep_strenght)
+			active_bones[11].apply_central_impulse(forward_dir * sweep_strenght)
+
+		"forward":
+			active_bones[9].apply_central_impulse(backward_dir * sweep_strenght)
+			active_bones[11].apply_central_impulse(backward_dir * sweep_strenght)
 	
 
 	
