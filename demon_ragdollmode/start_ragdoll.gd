@@ -58,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	for i in range(active_bones.size() - 1, -1, -1):
 		var bone = active_bones[i]
 		# bone activity threshold
-		if bone.get_linear_velocity().length() < 0.01:
+		if bone.get_linear_velocity().length() < 0.00025:
 			print("bone removed: ", bone)
 			active_bones.remove_at(i)
 	

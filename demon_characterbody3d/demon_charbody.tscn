@@ -428,7 +428,7 @@ target_position = Vector3(0.2, 0, 0)
 hit_from_inside = true
 
 [node name="HeadBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.00745098, 0.00600287, 0.999954, -0.653144, 0.757234, 0.000320995, -0.757197, -0.653116, 0.00956287, 0.00113046, 0.466516, -0.111752)
+transform = Transform3D(0.00745096, 0.00597389, 0.999954, -0.653144, 0.757234, 0.000342929, -0.757197, -0.653116, 0.00954393, 0.00112811, 0.466516, -0.111752)
 bone_name = "Head"
 bone_idx = 5
 

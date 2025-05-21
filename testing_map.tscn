@@ -54,8 +54,7 @@ compositor = SubResource("Compositor_7od4i")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-1.91566e-08, 0.766044, -0.642788, 2.28299e-08, 0.642788, 0.766044, 1, 0, -2.98023e-08, 2.55827e-07, 6, -13.3545)
-visible = false
-light_energy = 0.0
+light_energy = 0.03
 shadow_enabled = true
 
 [node name="Node3D" parent="." instance=ExtResource("2_ah52j")]

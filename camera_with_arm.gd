@@ -55,6 +55,6 @@ func _process(delta: float) -> void:
 		global_position = global_position.lerp(target.global_position, follow_speed * delta)
 		
 	if (target == ragdoll_skele):
-		print(ragdoll_root_bone_pos)
+		#print(ragdoll_root_bone_pos)
 		#var target_pos = Vector3(ragdoll_skele.get_bone_pose_position(0).x, ragdoll_skele.get_bone_pose_position(0).y, ragdoll_skele.get_bone_pose_position(0).z)
 		global_position = global_position.lerp(ragdoll_root_bone_pos, follow_speed * delta)
