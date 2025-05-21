@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbkq3m4q5lubo"]
+
+[ext_resource type="Script" uid="uid://0pf0knqaohma" path="res://spring_arm_camera.gd" id="1_fprdj"]
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_fprdj"]
+
+[node name="SpringArm3D" type="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
+shape = SubResource("SeparationRayShape3D_fprdj")
+spring_length = 30.0
+margin = 20.0
+script = ExtResource("1_fprdj")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0)
+fov = 14.2
+near = 0.006
+far = 2000.0
