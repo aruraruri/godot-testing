@@ -3,26 +3,29 @@ extends CharacterBody3D
 @export var turn_speed: float = 1.0
 @export var ground_offset: float = 0
 @export var sprint_speed: float = 5
-@export var tilt_speed: float = 30
+@export var tilt_speed: float = 1.5
+@export var sprint_tilt_speed: float = 2.5
 @export var mass_offset_speed = 0.1
 @onready var left_target: Marker3D = $leftLegIKTarget
 @onready var right_target: Marker3D = $rightLegIKTarget
 @onready var tilt_target: Marker3D = $Armature/Skeleton3D/SidewaysBodyTiltTarget
 @onready var mesh: MeshInstance3D = $Armature/Skeleton3D/char_lowpoly
+@onready var forward_backward_body_tilt_target: Marker3D = $Armature/Skeleton3D/ForwardBackwardBodyTiltTarget
 
 @onready var LfootCast: RayCast3D = $Armature/Skeleton3D/LeftFootBoneAttachment3D/LFootRayCast3D
 @onready var RfootCast: RayCast3D = $Armature/Skeleton3D/RightFootBoneAttachment3D/RFootRayCast3D
 
 @onready var fallRay: RayCast3D = $FallRayCast3D
 
-
+@export var tilt_limit_back: float = -6.0
 @export var tilt_limit_right: float = 6.4
 @export var tilt_limit_left: float = -3.7
 @export var tilt_recovery_lerp_weight = 0.008
 var atLimit: bool = false
-var fall_direction: int
+var fall_direction: String
 var fallen: bool = false
 var sprinting: bool = false
+var sprint_stamina: float = 100.0
 signal player_fall
 
 func _ready() -> void:
@@ -50,7 +53,7 @@ func _handle_tilt(delta: float):
 		#print("left foot off ground")
 		if tilt_target.position.y < tilt_limit_left:
 			tilt_target.position.y = tilt_limit_left
-			fall_direction = -1
+			fall_direction = "left"
 			atLimit = true
 		else:
 			tilt_target.position.y -= tilt_speed * delta
@@ -64,7 +67,7 @@ func _handle_tilt(delta: float):
 		
 		if tilt_target.position.y > tilt_limit_right:
 			tilt_target.position.y = tilt_limit_right
-			fall_direction = 1
+			fall_direction = "right"
 			atLimit = true
 			
 		else:
@@ -82,7 +85,9 @@ func _handle_tilt(delta: float):
 func fall():
 	#do once
 	if (!fallen):
-		emit_signal("player_fall", velocity, fall_direction)
+		var forward_dir = -global_transform.basis.z.normalized()
+		var up_dir = fallRay.get_collision_normal().normalized() # terrains up dir
+		emit_signal("player_fall", velocity, fall_direction, forward_dir, up_dir)
 
 	fallen = true
 	mesh.hide()
@@ -91,9 +96,21 @@ func fall():
 func get_up(root_ref):
 	position = root_ref.position
 	tilt_target.position.y = 1.214
+	forward_backward_body_tilt_target.position.z = 0.0
 	atLimit = false
 	fallen = false
 	mesh.show()
+	
+func _sprint(delta):
+		sprinting = true
+		forward_backward_body_tilt_target.position.z -= sprint_tilt_speed * delta
+		if forward_backward_body_tilt_target.position.z < tilt_limit_back:
+			fall_direction = "backward"
+			atLimit = true
+		
+func _recover_sprint(delta):
+		sprinting = false
+		forward_backward_body_tilt_target.position.z = lerp(forward_backward_body_tilt_target.position.z, 0.0, tilt_recovery_lerp_weight)
 
 func _handle_movement(delta):
 
@@ -101,10 +118,10 @@ func _handle_movement(delta):
 	var movement_vector = (Vector3(input_dir.x, 0, input_dir.y))
 	#print(movement_vector)
 	if Input.is_action_pressed("sprint"):
-		sprinting = true
+		_sprint(delta)
 		velocity = velocity.lerp(movement_vector * sprint_speed, 0.5)
 	else:
-		sprinting = false
+		_recover_sprint(delta)
 		velocity = velocity.lerp(movement_vector * move_speed, 0.5)
 	#print(velocity)
 	

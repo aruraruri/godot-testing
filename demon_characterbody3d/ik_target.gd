@@ -3,6 +3,8 @@ extends Marker3D
 @export var step_target: Node3D
 @export var walk_step_distance: float = 0.5
 @export var sprint_step_distance: float = 1.0
+@export var walk_step_duration: float = 0.1
+@export var sprint_step_duration: float = 0.2
 @onready var demon_charbody: CharacterBody3D = $".."
 @export var adjacent_target: Node3D
 
