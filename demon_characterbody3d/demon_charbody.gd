@@ -125,9 +125,14 @@ func get_up(root_ref):
 	forwards_tilt_target.position.z = 0
 	atLimit = false
 	fallen = false
-	left_target.position = fallRay.get_collision_point()
-	right_target.position = fallRay.get_collision_point()
-	$stepTargetContainer.position = position
+	#$stepTargetContainer.position = position
+	#left_target.position = fallRay.get_collision_point()
+	#right_target.position = fallRay.get_collision_point()
+	left_target.force_foot_to_target()
+	right_target.force_foot_to_target()
+	left_target.step()
+	right_target.step()
+	
 	show()
 	
 func _sprint(delta):
@@ -165,17 +170,13 @@ func _handle_rotation(delta):
 	
 	if (look_dir):
 		rotation.y = lerp_angle(rotation.y, target_angle, turn_speed * delta)
-		
-
-func _apply_gravity(delta):
-	position.y -= 1.0 * delta
 
 func _physics_process(delta: float) -> void:
 	if !fallen:
 		#height setting with ik targets
 		
 		#var avg = (left_target.position + right_target.position) / 2
-		var target_pos = Vector3(fallRay.get_collision_point().x, fallRay.get_collision_point().y + + ground_offset, fallRay.get_collision_point().z)
+		var target_pos = Vector3(fallRay.get_collision_point().x, fallRay.get_collision_point().y + ground_offset, fallRay.get_collision_point().z)
 		position.y = lerp(position.y, target_pos.y, 0.1)
 		
 		_handle_movement(delta)

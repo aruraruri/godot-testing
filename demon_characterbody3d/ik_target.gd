@@ -28,3 +28,8 @@ func step():
 	t.tween_property(self, "global_position", half_way + Vector3(0, 0.2, 0), 0.1)
 	t.tween_property(self, "global_position", target_pos, 0.1)
 	t.tween_callback(func(): is_stepping = false)
+	
+func force_foot_to_target():
+	print("ik_target forcing foot to target")
+	is_stepping = false
+	global_position = step_target.global_position

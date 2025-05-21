@@ -291,6 +291,8 @@ tip_bone = &"Foot_L"
 use_magnet = true
 magnet = Vector3(0, 10, -20)
 target_node = NodePath("../../../leftLegIKTarget")
+min_distance = 0.0
+max_iterations = 20
 script = ExtResource("2_3jh3r")
 
 [node name="rightLegIK" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
@@ -299,6 +301,8 @@ tip_bone = &"Foot_R"
 use_magnet = true
 magnet = Vector3(0, 10, -20)
 target_node = NodePath("../../../rightLegIKTarget")
+min_distance = 0.0
+max_iterations = 20
 script = ExtResource("2_3jh3r")
 
 [node name="ForwardBackwardBodyTilt" type="LookAtModifier3D" parent="Armature/Skeleton3D"]
@@ -429,7 +433,7 @@ target_position = Vector3(0.2, 0, 0)
 hit_from_inside = true
 
 [node name="HeadBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.00745095, 0.00598695, 0.999954, -0.653144, 0.757234, 0.000333036, -0.757197, -0.653116, 0.00955245, 0.00112917, 0.466516, -0.111752)
+transform = Transform3D(0.00745098, 0.00598715, 0.999954, -0.653144, 0.757234, 0.000332901, -0.757197, -0.653116, 0.00955261, 0.00112918, 0.466516, -0.111752)
 bone_name = "Head"
 bone_idx = 5
 
