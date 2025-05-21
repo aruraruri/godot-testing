@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbkq3m4q5lubo"]
+
+[ext_resource type="Script" uid="uid://0pf0knqaohma" path="res://camera_with_arm.gd" id="1_g8ouv"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_t5foy"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_g8ouv")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.838718, 0.544566, 0, -0.544566, 0.838718, 1.19209e-07, 12.9558, 18.5208)
+fov = 14.2
+near = 0.006
+far = 2000.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_t5foy")
