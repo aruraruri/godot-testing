@@ -108,7 +108,8 @@ height = 0.787998
 collision_layer = 134217728
 motion_mode = 1
 script = ExtResource("1_wbgx1")
-move_speed = 6.5
+move_speed = 1.3
+sprint_speed = 3.0
 
 [node name="Armature" type="Node3D" parent="."]
 
@@ -427,7 +428,6 @@ transform = Transform3D(1.91068e-15, 4.37114e-08, -1, 1, -4.37114e-08, -6.35275e
 top_level = true
 script = ExtResource("3_sbjls")
 step_target = NodePath("../stepTargetContainer/leftStepRay/leftStepTarget")
-step_distance = 0.5
 adjacent_target = NodePath("../rightLegIKTarget")
 
 [node name="rightLegIKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("step_target", "adjacent_target")]
@@ -436,14 +436,12 @@ transform = Transform3D(1.91068e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.371
 top_level = true
 script = ExtResource("3_sbjls")
 step_target = NodePath("../stepTargetContainer/rightStepRay/rightStepTarget")
-step_distance = 0.5
 adjacent_target = NodePath("../leftLegIKTarget")
 
 [node name="stepTargetContainer" type="Node3D" parent="."]
 editor_description = "Container for rays that find next step locations. Container is moved by script according to parent velocity and an offset, to get more accurate step positioning towards movement direction."
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0040822, -2.38419e-07, 0.000941753)
 script = ExtResource("4_c2hh7")
-offset = 20.0
 
 [node name="leftStepRay" type="RayCast3D" parent="stepTargetContainer" node_paths=PackedStringArray("step_target")]
 transform = Transform3D(1, 0, 0, 0, 0.906307, -0.422618, 0, 0.422618, 0.906308, -0.19, 0.725, 0.2)

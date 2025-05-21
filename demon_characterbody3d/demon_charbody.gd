@@ -2,7 +2,7 @@ extends CharacterBody3D
 @export var move_speed: float = 5.0
 @export var turn_speed: float = 1.0
 @export var ground_offset: float = 0
-@export var sprint_speed: float = 10.0
+@export var sprint_speed: float = 5
 @export var tilt_speed: float = 30
 @export var mass_offset_speed = 0.1
 @onready var left_target: Marker3D = $leftLegIKTarget
@@ -22,6 +22,7 @@ extends CharacterBody3D
 var atLimit: bool = false
 var fall_direction: int
 var fallen: bool = false
+var sprinting: bool = false
 signal player_fall
 
 func _ready() -> void:
@@ -99,8 +100,12 @@ func _handle_movement(delta):
 	var input_dir = Input.get_vector("left", "right", "up", "down").normalized()
 	var movement_vector = (Vector3(input_dir.x, 0, input_dir.y))
 	#print(movement_vector)
-	
-	velocity = velocity.lerp(movement_vector * move_speed, 0.5)
+	if Input.is_action_pressed("sprint"):
+		sprinting = true
+		velocity = velocity.lerp(movement_vector * sprint_speed, 0.5)
+	else:
+		sprinting = false
+		velocity = velocity.lerp(movement_vector * move_speed, 0.5)
 	#print(velocity)
 	
 	# move rigid body collision along
