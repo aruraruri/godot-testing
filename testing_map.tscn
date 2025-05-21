@@ -84,7 +84,7 @@ transform = Transform3D(4.13664, 0, 3.47106, 0, 5.4, 0, -3.47106, 0, 4.13664, 0.
 transform = Transform3D(5.79129, 0, 4.85946, 0, 7.56, 0, -4.85946, 0, 5.79129, -9.69874, 3.5, 1.53279)
 
 [node name="hilltest" parent="." instance=ExtResource("4_1puo1")]
-transform = Transform3D(1.17806, -0.0295359, 0.0282748, 0, 2.58722, 0.353344, -0.0356226, -0.976769, 0.935066, -2.31063, -11.7287, -17.7675)
+transform = Transform3D(0.833395, 0.691252, -0.661459, 0, 2.58708, 0.353475, 0.833395, -0.691252, 0.661459, 4.07003, -11.7287, -17.1969)
 
 [node name="DemonRagdoll" parent="." instance=ExtResource("5_ah52j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.2037, 5.25101, 0.0106316)
@@ -101,7 +101,6 @@ move_speed = 1.3
 turn_speed = 3.0
 ground_offset = 0.045
 tilt_speed = 1.5
-tilt_limit_right = 2.5
-tilt_limit_left = -2.5
+tilt_recovery_lerp_weight = 0.01
 
 [node name="FpsCounter" parent="." instance=ExtResource("6_53ovy")]
