@@ -8,7 +8,8 @@ extends CharacterBody3D
 @export var mass_offset_speed = 0.1
 @onready var left_target: Marker3D = $leftLegIKTarget
 @onready var right_target: Marker3D = $rightLegIKTarget
-@onready var tilt_target: Marker3D = $Armature/Skeleton3D/SidewaysBodyTiltTarget
+@onready var sideways_tilt_target: Marker3D = $Armature/Skeleton3D/SidewaysBodyTiltTarget
+@onready var forwards_tilt_target: Marker3D = $Armature/Skeleton3D/ForwardBackwardBodyTiltTarget
 @onready var mesh: MeshInstance3D = $Armature/Skeleton3D/char_lowpoly
 @onready var forward_backward_body_tilt_target: Marker3D = $Armature/Skeleton3D/ForwardBackwardBodyTiltTarget
 
@@ -17,9 +18,12 @@ extends CharacterBody3D
 
 @onready var fallRay: RayCast3D = $FallRayCast3D
 
+
 @export var tilt_limit_back: float = -6.0
-@export var tilt_limit_right: float = 6.4
-@export var tilt_limit_left: float = -3.7
+@export var tilt_limit_forwards: float = 4.0
+
+@export var tilt_limit_right: float = 2.5
+@export var tilt_limit_left: float = -2.5
 @export var tilt_recovery_lerp_weight = 0.008
 var atLimit: bool = false
 var fall_direction: String
@@ -35,45 +39,66 @@ func _ready() -> void:
 	
 func ground_angle_walkable(normal: Vector3):
 	var difference = normal.dot(Vector3.UP)
-	print(difference)
-	if (difference < 0.5):
+	#print(difference)
+	if (difference > 0.80):
 		return true
 	else:
 		return false
 	
 func _handle_tilt(delta: float):
 	
-	if (LfootCast.is_colliding() and RfootCast.is_colliding()):
+	# recover balance if both feet are on the ground and the ground is even enough
+	if (LfootCast.is_colliding() and RfootCast.is_colliding() and ground_angle_walkable(LfootCast.get_collision_normal()) and ground_angle_walkable(RfootCast.get_collision_normal())):
 		# TILT RECOVERY WEIGHT with HARD-CODED ZERO OUT POS
-		tilt_target.position.y = lerp(tilt_target.position.y, 0.0, tilt_recovery_lerp_weight)
+		sideways_tilt_target.position.y = lerp(sideways_tilt_target.position.y, 0.0, tilt_recovery_lerp_weight)
+		forwards_tilt_target.position.z = lerp(forwards_tilt_target.position.z, -1.0, tilt_recovery_lerp_weight)
 		#print("feet on ground")
 		
 	# make sure foot raycasts are always pointing downwards
-	if (!LfootCast.is_colliding() or ground_angle_walkable(LfootCast.get_collision_normal())):
+	if (!LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())):
 		#print("left foot off ground")
-		if tilt_target.position.y < tilt_limit_left:
-			tilt_target.position.y = tilt_limit_left
+
+		if sideways_tilt_target.position.y < tilt_limit_left:
+			sideways_tilt_target.position.y = tilt_limit_left
 			fall_direction = "left"
 			atLimit = true
 		else:
-			tilt_target.position.y -= tilt_speed * delta
+			sideways_tilt_target.position.y -= tilt_speed * delta
 			#center_of_mass.x -= mass_offset_speed
 			atLimit = false
 			
 	
 
-	if (!RfootCast.is_colliding() or ground_angle_walkable(RfootCast.get_collision_normal())):
+	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal())):
 		#print("right foot off ground")
 		
-		if tilt_target.position.y > tilt_limit_right:
-			tilt_target.position.y = tilt_limit_right
+
+		if sideways_tilt_target.position.y > tilt_limit_right:
+			sideways_tilt_target.position.y = tilt_limit_right
 			fall_direction = "right"
 			atLimit = true
 			
 		else:
-			tilt_target.position.y += tilt_speed * delta
+			sideways_tilt_target.position.y += tilt_speed * delta
 			#center_of_mass.x += mass_offset_speed
 			atLimit = false
+			
+			
+			
+	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal()) and !LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())):
+		#print("right foot off ground")
+		
+		if forwards_tilt_target.position.z > tilt_limit_forwards:
+			forwards_tilt_target.position.z = tilt_limit_forwards
+			fall_direction = 0
+			atLimit = true
+			
+		else:
+			forwards_tilt_target.position.z += tilt_speed * delta
+			#center_of_mass.x += mass_offset_speed
+			atLimit = false
+			
+			
 	
 	if atLimit:
 		fall() # Turn on physics
@@ -95,8 +120,9 @@ func fall():
 # reference to PhysicalBones root from signal
 func get_up(root_ref):
 	position = root_ref.position
-	tilt_target.position.y = 1.214
 	forward_backward_body_tilt_target.position.z = 0.0
+	sideways_tilt_target.position.y = 0
+	forwards_tilt_target.position.z = 0
 	atLimit = false
 	fallen = false
 	mesh.show()
@@ -148,7 +174,7 @@ func _physics_process(delta: float) -> void:
 		var target_pos = Vector3(fallRay.get_collision_point().x, fallRay.get_collision_point().y + + ground_offset, fallRay.get_collision_point().z)
 		position.y = lerp(position.y, target_pos.y, 0.1)
 		
-
+		print(forwards_tilt_target.position.z)
 		_handle_movement(delta)
 		_handle_rotation(delta)
 		_handle_tilt(delta)

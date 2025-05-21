@@ -309,8 +309,12 @@ forward_axis = 3
 primary_rotation_axis = 2
 
 [node name="ForwardBackwardBodyTiltTarget" type="Marker3D" parent="Armature/Skeleton3D"]
-editor_description = "Moving this marker on local z-axis tilts player model. Y should be -5.0m, all other axes should be zeroed out by default."
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.20099, 0)
+
+editor_description = "Moving this marker on local z-axis tilts player model. Default values for pos:
+x: 0.0m
+y: -5.0m
+z: -1.0"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, -1)
 
 [node name="SidewaysBodyTilt" type="LookAtModifier3D" parent="Armature/Skeleton3D"]
 target_node = NodePath("../SidewaysBodyTiltTarget")
@@ -426,7 +430,7 @@ target_position = Vector3(0.2, 0, 0)
 hit_from_inside = true
 
 [node name="HeadBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(-0.00508753, -0.0111386, 0.999925, -0.79555, 0.605882, 0.00270151, -0.605867, -0.795477, -0.0119438, -0.00360833, 0.433474, -0.247304)
+transform = Transform3D(0.00745097, 0.00598714, 0.999954, -0.653144, 0.757234, 0.000332902, -0.757197, -0.653116, 0.00955259, 0.00112918, 0.466516, -0.111752)
 bone_name = "Head"
 bone_idx = 5
 
@@ -442,10 +446,18 @@ material_override = ExtResource("4_lf6lk")
 mesh = SubResource("SphereMesh_47ywq")
 skeleton = NodePath("../..")
 
-[node name="eye_light" type="OmniLight3D" parent="Armature/Skeleton3D/HeadBoneAttachment3D"]
+[node name="OmniLight3D_Eyes" type="OmniLight3D" parent="Armature/Skeleton3D/HeadBoneAttachment3D"]
 transform = Transform3D(-0.00494898, -0.793929, -0.60799, -0.0109126, 0.608004, -0.793859, 0.999928, 0.00270597, -0.0116728, 0.44486, 0.323908, 0.00245021)
 light_energy = 0.3
 omni_range = 1.44069
+
+[node name="SpotLight3D_Front" type="SpotLight3D" parent="Armature/Skeleton3D/HeadBoneAttachment3D"]
+transform = Transform3D(-0.00494909, -0.317633, -0.948201, -0.0109126, 0.948173, -0.317567, 0.999928, 0.0087757, -0.00815881, 0.403406, 0.13691, 0.00688303)
+light_energy = 1.413
+light_size = 0.253
+shadow_enabled = true
+spot_range = 53.8559
+spot_angle = 70.3125
 
 [node name="leftLegIKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("step_target", "adjacent_target")]
 editor_description = "Targets that leg IK are trying to reach. Moved by script when player global_position too far away."
@@ -496,15 +508,7 @@ shape = SubResource("CapsuleShape3D_epcar")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0017757, 0.846339, 0.0150056)
 target_position = Vector3(0, -20, 0)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.828696, 0.559699, 0, -0.559699, 0.828696, 0, 1.249, -0.599467)
-light_energy = 1.413
-light_size = 0.253
-shadow_enabled = true
-spot_range = 53.8559
-spot_angle = 70.3125
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.099, 1.624, 0)
+[node name="OmniLight3D_Back" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.099, 1.64847, 0.173309)
 light_energy = 0.3
 omni_range = 1.44069
