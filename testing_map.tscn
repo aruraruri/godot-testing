@@ -67,7 +67,6 @@ compositor = SubResource("Compositor_7od4i")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-1.91566e-08, 0.766044, -0.642788, 2.28299e-08, 0.642788, 0.766044, 1, 0, -2.98023e-08, 2.55827e-07, 6, -13.3545)
-visible = false
 light_energy = 0.0
 shadow_enabled = true
 
@@ -99,8 +98,7 @@ floor_stop_on_slope = false
 floor_block_on_wall = false
 turn_speed = 3.0
 ground_offset = 0.045
-tilt_speed = 1.5
+sprint_tilt_speed = 3.5
 tilt_recovery_lerp_weight = 0.01
 
 [node name="FpsCounter" parent="." instance=ExtResource("6_53ovy")]
-

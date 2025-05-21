@@ -90,7 +90,7 @@ func _handle_tilt(delta: float):
 		
 		if forwards_tilt_target.position.z > tilt_limit_forwards:
 			forwards_tilt_target.position.z = tilt_limit_forwards
-			fall_direction = 0
+			fall_direction = "forward"
 			atLimit = true
 			
 		else:
@@ -130,6 +130,7 @@ func get_up(root_ref):
 func _sprint(delta):
 		sprinting = true
 		forward_backward_body_tilt_target.position.z -= sprint_tilt_speed * delta
+		print("postion ", forwards_tilt_target.position.z)
 		if forward_backward_body_tilt_target.position.z < tilt_limit_back:
 			fall_direction = "backward"
 			atLimit = true
