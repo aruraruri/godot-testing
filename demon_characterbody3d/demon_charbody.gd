@@ -31,7 +31,7 @@ func _ready() -> void:
 	
 func ground_angle_walkable(normal: Vector3):
 	var difference = normal.dot(Vector3.UP)
-	#print(difference)
+	print(difference)
 	if (difference < 0.5):
 		return true
 	else:
@@ -43,7 +43,8 @@ func _handle_tilt(delta: float):
 		# TILT RECOVERY WEIGHT with HARD-CODED ZERO OUT POS
 		tilt_target.position.y = lerp(tilt_target.position.y, 0.0, tilt_recovery_lerp_weight)
 		#print("feet on ground")
-	
+		
+	# make sure foot raycasts are always pointing downwards
 	if (!LfootCast.is_colliding() or ground_angle_walkable(LfootCast.get_collision_normal())):
 		#print("left foot off ground")
 		if tilt_target.position.y < tilt_limit_left:
@@ -128,8 +129,8 @@ func _physics_process(delta: float) -> void:
 
 		_handle_movement(delta)
 		_handle_rotation(delta)
-		
+		_handle_tilt(delta)
 		
 		move_and_slide()
 		
-	_handle_tilt(delta)
+	

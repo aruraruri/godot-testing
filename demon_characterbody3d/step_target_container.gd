@@ -7,6 +7,6 @@ extends Node3D
 
 func _physics_process(delta: float) -> void:
 	var velocity = parent.global_position - previous_position
-	global_position = lerp(global_position, parent.global_position + (velocity * offset), 0.5)
+	global_position = lerp(global_position, parent.global_position + (velocity * offset), 0.1)
 	
 	previous_position = parent.global_position

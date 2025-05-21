@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cdqauywj4n5rd"]
 
-[ext_resource type="Script" uid="uid://41o6e4r2so32" path="res://demon-rigidbody/camera_rigidbody.gd" id="1_tupn0"]
+[ext_resource type="Script" uid="uid://41o6e4r2so32" path="res://DELETE_DIS/demon-rigidbody/camera_rigidbody.gd" id="1_tupn0"]
 
 [node name="Camera" type="Node3D"]
 

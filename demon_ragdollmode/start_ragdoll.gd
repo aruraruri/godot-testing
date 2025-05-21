@@ -25,12 +25,13 @@ func handle_fall(velocity, fall_direction) -> void:
 	set_physics_process(true)
 	# transfer ragdoll over to player
 	global_transform = character.transform
-	# show ragdoll
-	show()
 	
 	# start stop sim to reset sim state to standing
 	physics_bones.physical_bones_stop_simulation()
 	physics_bones.physical_bones_start_simulation()
+	
+	# show ragdoll
+	show()
 	
 	print("monitored bones: ", bones_to_monitor)
 	# set bones to active (without duplicate bones_to_monitor was emptying on second fall onwards)
@@ -61,7 +62,7 @@ func _physics_process(delta: float) -> void:
 			print("bone removed: ", bone)
 			active_bones.remove_at(i)
 	
-	# maybe want to have a threshold instead -> over half of bones sleeping = bones_sleep
+	# MAYBE WANT!!! to have a threshold instead -> over half of bones sleeping = bones_sleep
 	if active_bones.is_empty():
 		emit_signal("bones_sleep", root_ref)
 		print("the bones sleep...")
