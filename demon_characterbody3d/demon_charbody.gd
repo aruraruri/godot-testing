@@ -20,7 +20,7 @@ extends CharacterBody3D
 
 
 @export var tilt_limit_back: float = -6.0
-@export var tilt_limit_forwards: float = 4.0
+#@export var tilt_limit_forwards: float = 2.0
 
 @export var tilt_limit_right: float = 2.5
 @export var tilt_limit_left: float = -2.5
@@ -86,15 +86,15 @@ func _handle_tilt(delta: float):
 			
 			
 	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal()) and !LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())):
-		#print("right foot off ground")
-		
-		if forwards_tilt_target.position.z > tilt_limit_forwards:
-			forwards_tilt_target.position.z = tilt_limit_forwards
+		# neither feet not on ground nor walkable ground angle
+		print(forwards_tilt_target.position.z)
+		if forwards_tilt_target.position.z < tilt_limit_back:
+			forwards_tilt_target.position.z = tilt_limit_back
 			fall_direction = "forward"
 			atLimit = true
 			
 		else:
-			forwards_tilt_target.position.z += tilt_speed * delta
+			forwards_tilt_target.position.z -= tilt_speed*3 * delta
 			#center_of_mass.x += mass_offset_speed
 			atLimit = false
 			
@@ -115,7 +115,7 @@ func fall():
 		emit_signal("player_fall", velocity, fall_direction, forward_dir, up_dir)
 
 	fallen = true
-	mesh.hide()
+	hide()
 
 # reference to PhysicalBones root from signal
 func get_up(root_ref):
@@ -125,7 +125,7 @@ func get_up(root_ref):
 	forwards_tilt_target.position.z = 0
 	atLimit = false
 	fallen = false
-	mesh.show()
+	show()
 	
 func _sprint(delta):
 		sprinting = true
