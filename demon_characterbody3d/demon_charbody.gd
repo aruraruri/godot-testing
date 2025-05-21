@@ -87,10 +87,10 @@ func _handle_tilt(delta: float):
 			
 	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal()) and !LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())):
 		# neither feet not on ground nor walkable ground angle
-		print(forwards_tilt_target.position.z)
+		#print(forwards_tilt_target.position.z)
 		if forwards_tilt_target.position.z < tilt_limit_back:
 			forwards_tilt_target.position.z = tilt_limit_back
-			fall_direction = "forward"
+			fall_direction = "backward"
 			atLimit = true
 			
 		else:
@@ -125,6 +125,9 @@ func get_up(root_ref):
 	forwards_tilt_target.position.z = 0
 	atLimit = false
 	fallen = false
+	left_target.position = fallRay.get_collision_point()
+	right_target.position = fallRay.get_collision_point()
+	$stepTargetContainer.position = position
 	show()
 	
 func _sprint(delta):

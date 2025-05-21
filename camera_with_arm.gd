@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var follow_speed: float = 1.6
+@export var follow_weight: float = 1.6
 
 @export var character: CharacterBody3D  
 @export var ragdoll: Node3D  
@@ -10,6 +10,8 @@ var ragdoll_skele: Skeleton3D
 var ragdoll_arma: Node3D
 
 var ragdoll_root_bone_pos
+
+var target_pos
 
 
 func _ready() -> void:
@@ -45,16 +47,19 @@ func switch_to_character(root_ref) -> void:
 		print("No character reference when trying to switch!")
 
 func get_bone_loc():
+	
 	ragdoll_root_bone_pos = (ragdoll_skele.global_transform * ragdoll_skele.get_bone_global_pose(0).origin)
-
+	# target root bone pos in world space, where we add the bone local space offset to the ragdoll scene root, to get EXACTLY same target positioning as in character target
+	target_pos = Vector3(ragdoll_root_bone_pos.x + ragdoll_skele.get_bone_global_pose(0).origin.x, ragdoll_root_bone_pos.y + ragdoll_skele.get_bone_global_pose(0).origin.y , ragdoll_root_bone_pos.z + ragdoll_skele.get_bone_global_pose(0).origin.z)
+	
 func _process(delta: float) -> void:
 	#print(target.global_position.y)
 	if target:
 		
 		# Track target position
-		global_position = global_position.lerp(target.global_position, follow_speed * delta)
+		global_position = global_position.lerp(target.global_position, follow_weight)
 		
-	if (target == ragdoll_skele):
-		#print(ragdoll_root_bone_pos)
+	if (character.fallen):
+		
 		#var target_pos = Vector3(ragdoll_skele.get_bone_pose_position(0).x, ragdoll_skele.get_bone_pose_position(0).y, ragdoll_skele.get_bone_pose_position(0).z)
-		global_position = global_position.lerp(ragdoll_root_bone_pos, follow_speed * delta)
+		global_position = global_position.lerp(target_pos, follow_weight)
