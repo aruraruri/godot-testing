@@ -1,14 +1,21 @@
 extends Marker3D
 
 @export var step_target: Node3D
-@export var step_distance: float = 1.0
-
+@export var walk_step_distance: float = 0.5
+@export var sprint_step_distance: float = 1.0
+@export var walk_step_duration: float = 0.1
+@export var sprint_step_duration: float = 0.2
+@onready var demon_charbody: CharacterBody3D = $".."
 @export var adjacent_target: Node3D
 
 var is_stepping := false
 
 func _process(delta):
-	if !is_stepping && !adjacent_target.is_stepping && abs(global_position.distance_to(step_target.global_position)) > step_distance:
+	if demon_charbody.sprinting:
+		if !is_stepping && !adjacent_target.is_stepping && abs(global_position.distance_to(step_target.global_position)) > sprint_step_distance:
+			print("sprinting!")
+			step()
+	elif !is_stepping && !adjacent_target.is_stepping && abs(global_position.distance_to(step_target.global_position)) > walk_step_distance:
 		step()
 
 func step():
