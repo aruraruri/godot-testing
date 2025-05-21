@@ -7,7 +7,7 @@ extends CharacterBody3D
 @export var mass_offset_speed = 0.1
 @onready var left_target: Marker3D = $leftLegIKTarget
 @onready var right_target: Marker3D = $rightLegIKTarget
-@onready var tilt_target: Marker3D = $Armature/Skeleton3D/bodyTiltTarget
+@onready var tilt_target: Marker3D = $Armature/Skeleton3D/SidewaysBodyTiltTarget
 @onready var mesh: MeshInstance3D = $Armature/Skeleton3D/char_lowpoly
 
 @onready var LfootCast: RayCast3D = $Armature/Skeleton3D/LeftFootBoneAttachment3D/LFootRayCast3D

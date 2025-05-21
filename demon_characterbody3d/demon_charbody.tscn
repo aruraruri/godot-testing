@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://cm4ld720sg7ky"]
+[gd_scene load_steps=10 format=4 uid="uid://cm4ld720sg7ky"]
 
 [ext_resource type="Script" uid="uid://c5i4j8lmxinli" path="res://demon_characterbody3d/demon_charbody.gd" id="1_wbgx1"]
 [ext_resource type="Script" uid="uid://bxjgyluhp4f7y" path="res://demon_characterbody3d/start_ik.gd" id="2_3jh3r"]
@@ -98,8 +98,6 @@ bind/21/pose = Transform3D(0.0544384, -0.835885, 0.546199, 0.219383, -0.523631, 
 bind/22/name = &"LegTip_R"
 bind/22/bone = -1
 bind/22/pose = Transform3D(0.0736368, -0.916257, 0.393764, 1.95578e-07, -0.394835, -0.918752, 0.997285, 0.0676543, -0.0290746, -0.947712, -0.550487, -0.140539)
-
-[sub_resource type="SphereMesh" id="SphereMesh_wbgx1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epcar"]
 radius = 0.257169
@@ -297,8 +295,19 @@ magnet = Vector3(0, 10, -20)
 target_node = NodePath("../../../rightLegIKTarget")
 script = ExtResource("2_3jh3r")
 
-[node name="bodyTilt" type="LookAtModifier3D" parent="Armature/Skeleton3D"]
-target_node = NodePath("../bodyTiltTarget")
+[node name="ForwardBackwardBodyTilt" type="LookAtModifier3D" parent="Armature/Skeleton3D"]
+target_node = NodePath("../ForwardBackwardBodyTiltTarget")
+bone_name = "Spine1"
+bone = 1
+forward_axis = 3
+primary_rotation_axis = 2
+
+[node name="ForwardBackwardBodyTiltTarget" type="Marker3D" parent="Armature/Skeleton3D"]
+editor_description = "Moving this marker on local z-axis tilts player model. Y should be -5.0m, all other axes should be zeroed out by default."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+
+[node name="SidewaysBodyTilt" type="LookAtModifier3D" parent="Armature/Skeleton3D"]
+target_node = NodePath("../SidewaysBodyTiltTarget")
 bone_name = "Spine2"
 bone = 2
 forward_axis = 5
@@ -309,7 +318,8 @@ primary_damp_threshold = 1.0
 secondary_limit_angle = 1.74533
 secondary_damp_threshold = 1.0
 
-[node name="bodyTiltTarget" type="Marker3D" parent="Armature/Skeleton3D"]
+[node name="SidewaysBodyTiltTarget" type="Marker3D" parent="Armature/Skeleton3D"]
+editor_description = "Moving this marker on local y-axis tilts player model. X should be -2.0m, all other axes should be zeroed out by default."
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
 [node name="SpringBoneSimulator3D_Arm_L" type="SpringBoneSimulator3D" parent="Armature/Skeleton3D"]
@@ -382,26 +392,35 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="LeftFootBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.054439, -0.219384, -0.974119, 0.835884, -0.523632, 0.164642, -0.5462, -0.823213, 0.154873, -0.190859, -1.03064, -0.0650539)
+editor_description = "Container and position getter for foot raycasts.
+
+Raycasts that check if feet are on the ground/what ground angle they are on. Used for visual player skeleton tilt angle setting."
+transform = Transform3D(-1.11759e-08, 3.72529e-08, -1, 1, -8.70787e-08, -3.72529e-09, -2.04891e-08, -1, -7.45058e-09, -0.188482, -1.02544, -0.0051959)
 bone_name = "Foot_L"
 bone_idx = 17
 
 [node name="LFootRayCast3D" type="RayCast3D" parent="Armature/Skeleton3D/LeftFootBoneAttachment3D"]
+editor_description = "Raycasts that check if feet are on the ground/what ground angle they are on. Used for visual player skeleton tilt angle setting."
 transform = Transform3D(1, 0, -1.67856e-14, 0, 1, 0, -9.3673e-16, 0, 1, 0, 0, 0)
 target_position = Vector3(-0.2, 0, 0)
 hit_from_inside = true
 
 [node name="RightFootBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.0544394, 0.219382, 0.974119, -0.835885, -0.523631, 0.164642, 0.546198, -0.823215, 0.154872, 0.190859, -1.03064, -0.0650541)
+editor_description = "Container and position getter for foot raycasts.
+
+Raycasts that check if feet are on the ground/what ground angle they are on. Used for visual player skeleton tilt angle setting."
+transform = Transform3D(-7.45058e-09, -5.21541e-08, 1, -1, 1.18278e-07, 0, -1.18278e-07, -1, -6.70552e-08, 0.199532, -1.03339, -0.0464116)
 bone_name = "Foot_R"
 bone_idx = 21
 
 [node name="RFootRayCast3D" type="RayCast3D" parent="Armature/Skeleton3D/RightFootBoneAttachment3D"]
+editor_description = "Raycasts that check if feet are on the ground/what ground angle they are on. Used for visual player skeleton tilt angle setting."
 transform = Transform3D(1, 0, 8.3267e-16, 0, 1, 7.10543e-15, 9.71445e-17, 0, 1, 0, 0, 0)
 target_position = Vector3(0.2, 0, 0)
 hit_from_inside = true
 
 [node name="leftLegIKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("step_target", "adjacent_target")]
+editor_description = "Targets that leg IK are trying to reach. Moved by script when player global_position too far away."
 transform = Transform3D(1.91068e-15, 4.37114e-08, -1, 1, -4.37114e-08, -6.35275e-21, -4.37114e-08, -1, -4.37114e-08, -0.19, 0, 0)
 top_level = true
 script = ExtResource("3_sbjls")
@@ -409,11 +428,8 @@ step_target = NodePath("../stepTargetContainer/leftStepRay/leftStepTarget")
 step_distance = 0.5
 adjacent_target = NodePath("../rightLegIKTarget")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="leftLegIKTarget"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
-mesh = SubResource("SphereMesh_wbgx1")
-
 [node name="rightLegIKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("step_target", "adjacent_target")]
+editor_description = "Targets that leg IK are trying to reach. Moved by script when player global_position too far away."
 transform = Transform3D(1.91068e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0.204822, -0.0480842, -0.0421963)
 top_level = true
 script = ExtResource("3_sbjls")
@@ -421,11 +437,8 @@ step_target = NodePath("../stepTargetContainer/rightStepRay/rightStepTarget")
 step_distance = 0.5
 adjacent_target = NodePath("../leftLegIKTarget")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="rightLegIKTarget"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
-mesh = SubResource("SphereMesh_wbgx1")
-
 [node name="stepTargetContainer" type="Node3D" parent="."]
+editor_description = "Container for rays that find next step locations. Container is moved by script according to parent velocity and an offset, to get more accurate step positioning towards movement direction."
 script = ExtResource("4_c2hh7")
 
 [node name="leftStepRay" type="RayCast3D" parent="stepTargetContainer" node_paths=PackedStringArray("step_target")]

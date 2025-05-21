@@ -18,6 +18,6 @@ func step():
 	
 	var t = get_tree().create_tween()
 	# vec3 is the step height for tweening
-	t.tween_property(self, "global_position", half_way + Vector3(0, 0.3, 0), 0.1)
+	t.tween_property(self, "global_position", half_way + Vector3(0, 0.2, 0), 0.1)
 	t.tween_property(self, "global_position", target_pos, 0.1)
 	t.tween_callback(func(): is_stepping = false)
