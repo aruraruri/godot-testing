@@ -12,6 +12,7 @@ extends CharacterBody3D
 @onready var forwards_tilt_target: Marker3D = $Armature/Skeleton3D/ForwardBackwardBodyTiltTarget
 @onready var mesh: MeshInstance3D = $Armature/Skeleton3D/char_lowpoly
 @onready var forward_backward_body_tilt_target: Marker3D = $Armature/Skeleton3D/ForwardBackwardBodyTiltTarget
+@onready var lean_grace_timer: Timer = $lean_grace_timer
 
 @onready var LfootCast: RayCast3D = $Armature/Skeleton3D/CustomBoneAttachmentL/LFootRayCast3D
 @onready var RfootCast: RayCast3D = $Armature/Skeleton3D/CustomBoneAttachmentR/RFootRayCast3D
@@ -25,6 +26,7 @@ extends CharacterBody3D
 @export var tilt_limit_right: float = 2.5
 @export var tilt_limit_left: float = -2.5
 @export var tilt_recovery_lerp_weight = 0.008
+var can_tilt: bool = true
 var atLimit: bool = false
 var fall_direction: String
 var fallen: bool = false
@@ -55,7 +57,7 @@ func _handle_tilt(delta: float):
 		#print("feet on ground")
 		
 	# make sure foot raycasts are always pointing downwards
-	if (!LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())):
+	if (!LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())) && can_tilt:
 		#print("left foot off ground")
 
 		if sideways_tilt_target.position.y < tilt_limit_left:
@@ -69,7 +71,7 @@ func _handle_tilt(delta: float):
 			
 	
 
-	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal())):
+	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal())) && can_tilt:
 		#print("right foot off ground")
 		
 
@@ -85,7 +87,7 @@ func _handle_tilt(delta: float):
 			
 			
 			
-	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal()) and !LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())):
+	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal()) and !LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())) && can_tilt:
 		# neither feet not on ground nor walkable ground angle
 		#print(forwards_tilt_target.position.z)
 		if forwards_tilt_target.position.z < tilt_limit_back:
@@ -125,6 +127,8 @@ func get_up(root_ref):
 	forwards_tilt_target.position.z = 0
 	atLimit = false
 	fallen = false
+	can_tilt = false
+	lean_grace_timer.start()
 	#$stepTargetContainer.position = position
 	
 	left_target.force_foot_to_target()
@@ -134,13 +138,18 @@ func get_up(root_ref):
 	
 	show()
 	
+func _on_lean_grace_timer_timeout() -> void:
+	print("timeout!")
+	can_tilt = true
+	
 func _sprint(delta):
 		sprinting = true
-		forward_backward_body_tilt_target.position.z -= sprint_tilt_speed * delta
-		print("postion ", forwards_tilt_target.position.z)
-		if forward_backward_body_tilt_target.position.z < tilt_limit_back:
-			fall_direction = "backward"
-			atLimit = true
+		if can_tilt:
+			forward_backward_body_tilt_target.position.z -= sprint_tilt_speed * delta
+			print("postion ", forwards_tilt_target.position.z)
+			if forward_backward_body_tilt_target.position.z < tilt_limit_back:
+				fall_direction = "backward"
+				atLimit = true
 		
 func _recover_sprint(delta):
 		sprinting = false
