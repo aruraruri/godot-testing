@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bonqdxr5kccx4"]
+[gd_scene load_steps=15 format=3 uid="uid://bonqdxr5kccx4"]
 
 [ext_resource type="PackedScene" uid="uid://cqlj8o10f676w" path="res://basic_ahh_box.tscn" id="2_ah52j"]
 [ext_resource type="PackedScene" uid="uid://duhwn1fyobuyl" path="res://hilltest.blend" id="4_1puo1"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://v71cfai18q6w" path="res://demon_ragdollmode/demon_ragdoll.tscn" id="5_ah52j"]
 [ext_resource type="PackedScene" uid="uid://bgfywu6e5ivme" path="res://fpsCounter.tscn" id="6_53ovy"]
 [ext_resource type="PackedScene" uid="uid://cbkq3m4q5lubo" path="res://CameraWithArm.tscn" id="7_1puo1"]
+[ext_resource type="PackedScene" uid="uid://c2atjr7ueed4n" path="res://rain.tscn" id="7_2lvs8"]
 
 [sub_resource type="Gradient" id="Gradient_2lvs8"]
 colors = PackedColorArray(0.214578, 0.140038, 0.647056, 1, 0.748904, 0.846725, 0.93022, 1)
@@ -93,3 +94,17 @@ tilt_recovery_lerp_weight = 0.01
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.409103, 3.07313, 7.96842)
 character = NodePath("../DemonCharbody")
 ragdoll = NodePath("../DemonRagdoll")
+
+[node name="rain_area" parent="." instance=ExtResource("7_2lvs8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27003, 11.0016, 0.0821834)
+
+[node name="rain" parent="rain_area" index="0" node_paths=PackedStringArray("target")]
+amount = 10000
+collision_base_size = 0.7
+target = NodePath("../../DemonCharbody")
+offset = Vector3(0, 20, -15)
+
+[node name="drops" parent="rain_area/rain" index="0"]
+amount = 10000
+
+[editable path="rain_area"]
