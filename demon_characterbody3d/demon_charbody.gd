@@ -6,15 +6,15 @@ extends CharacterBody3D
 @export var tilt_speed: float = 1.5
 @export var sprint_tilt_speed: float = 2.5
 @export var mass_offset_speed = 0.1
-@onready var left_target: Marker3D = $leftLegIKTarget
-@onready var right_target: Marker3D = $rightLegIKTarget
+@onready var left_target: GodotIKEffector = $Armature/Skeleton3D/GodotIKLegIK/leftIKRoot/leftLegIKTarget
+@onready var right_target: GodotIKEffector = $Armature/Skeleton3D/GodotIKLegIK/rightIKRoot/rightLegIKTarget
 @onready var sideways_tilt_target: Marker3D = $Armature/Skeleton3D/SidewaysBodyTiltTarget
 @onready var forwards_tilt_target: Marker3D = $Armature/Skeleton3D/ForwardBackwardBodyTiltTarget
 @onready var mesh: MeshInstance3D = $Armature/Skeleton3D/char_lowpoly
 @onready var forward_backward_body_tilt_target: Marker3D = $Armature/Skeleton3D/ForwardBackwardBodyTiltTarget
 
-@onready var LfootCast: RayCast3D = $Armature/Skeleton3D/LeftFootBoneAttachment3D/LFootRayCast3D
-@onready var RfootCast: RayCast3D = $Armature/Skeleton3D/RightFootBoneAttachment3D/RFootRayCast3D
+@onready var LfootCast: RayCast3D = $Armature/Skeleton3D/CustomBoneAttachmentL/LFootRayCast3D
+@onready var RfootCast: RayCast3D = $Armature/Skeleton3D/CustomBoneAttachmentR/RFootRayCast3D
 
 @onready var fallRay: RayCast3D = $FallRayCast3D
 
@@ -126,8 +126,7 @@ func get_up(root_ref):
 	atLimit = false
 	fallen = false
 	#$stepTargetContainer.position = position
-	#left_target.position = fallRay.get_collision_point()
-	#right_target.position = fallRay.get_collision_point()
+	
 	left_target.force_foot_to_target()
 	right_target.force_foot_to_target()
 	left_target.step()

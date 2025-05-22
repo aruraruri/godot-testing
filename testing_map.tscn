@@ -84,7 +84,6 @@ wall_min_slide_angle = 0.0174533
 floor_stop_on_slope = false
 floor_block_on_wall = false
 turn_speed = 3.0
-ground_offset = -0.05
 sprint_tilt_speed = 3.5
 tilt_recovery_lerp_weight = 0.01
 
