@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bonqdxr5kccx4"]
+[gd_scene load_steps=18 format=3 uid="uid://bonqdxr5kccx4"]
 
 [ext_resource type="PackedScene" uid="uid://cqlj8o10f676w" path="res://basic_ahh_box.tscn" id="2_ah52j"]
 [ext_resource type="PackedScene" uid="uid://duhwn1fyobuyl" path="res://hilltest.blend" id="4_1puo1"]
@@ -45,6 +45,21 @@ adjustment_contrast = 1.1
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_vj123"]
 
 [sub_resource type="Compositor" id="Compositor_7od4i"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1puo1"]
+load_path = "res://.godot/imported/streak.png-3e758164b09f0012015b43aad18655fc.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lvs8"]
+blend_mode = 1
+diffuse_mode = 1
+disable_fog = true
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("CompressedTexture2D_1puo1")
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_quy1o"]
+material = SubResource("StandardMaterial3D_2lvs8")
+size = 0.05
 
 [node name="TestingMap" type="Node3D"]
 
@@ -99,8 +114,10 @@ ragdoll = NodePath("../DemonRagdoll")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.27003, 11.0016, 0.0821834)
 
 [node name="rain" parent="rain_area" index="0" node_paths=PackedStringArray("target")]
+cast_shadow = 0
 amount = 10000
 collision_base_size = 0.7
+draw_pass_1 = SubResource("RibbonTrailMesh_quy1o")
 target = NodePath("../../DemonCharbody")
 offset = Vector3(0, 20, -15)
 
