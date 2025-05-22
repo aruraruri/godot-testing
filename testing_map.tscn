@@ -91,6 +91,5 @@ tilt_recovery_lerp_weight = 0.01
 
 [node name="camera" parent="." node_paths=PackedStringArray("character", "ragdoll") instance=ExtResource("7_1puo1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.409103, 3.07313, 7.96842)
-follow_weight = 0.01
 character = NodePath("../DemonCharbody")
 ragdoll = NodePath("../DemonRagdoll")

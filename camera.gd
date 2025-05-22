@@ -4,12 +4,25 @@ extends Camera3D
 @export var target_offset_z: float = 5.0
 @export var target_offset_y: float = 5.0
 
+@export var randomStrength: float = 30.0
+@export var shakeFade: float = 5.0
+
 @export var character: CharacterBody3D  
 @export var ragdoll: Node3D  
 
 var target: Node3D
 var ragdoll_skele: Skeleton3D
 var ragdoll_arma: Node3D
+
+var rng = RandomNumberGenerator.new()
+var shake_strength: float = 0.0
+
+func apply_shake():
+	shake_strength = randomStrength
+
+func randomOffset() -> Vector2:
+	return Vector2(rng.randf_range(-shake_strength, shake_strength),rng.randf_range(-shake_strength, shake_strength))
+	
 
 func _ready() -> void:
 	if !character or !ragdoll:  

@@ -35,6 +35,8 @@ var fallen: bool = false
 var sprinting: bool = false
 var sprint_stamina: float = 100.0
 signal player_fall
+signal player_tilt_side
+signal player_tilt_back
 
 func _ready() -> void:
 	var ragdoll = get_tree().get_root().get_node("TestingMap/DemonRagdoll")
@@ -102,7 +104,8 @@ func _handle_tilt(delta: float):
 			#center_of_mass.x += mass_offset_speed
 			atLimit = false
 			
-			
+	emit_signal("player_tilt_side", sideways_tilt_target.position.y, tilt_limit_left, tilt_limit_right)
+	emit_signal("player_tilt_back", forwards_tilt_target.position.z, tilt_limit_back)
 	
 	if atLimit:
 		fall() # Turn on physics
@@ -150,7 +153,7 @@ func _sprint(delta):
 		sprinting = true
 		if can_tilt:
 			forward_backward_body_tilt_target.position.z -= sprint_tilt_speed * delta
-			print("postion ", forwards_tilt_target.position.z)
+			#print("postion ", forwards_tilt_target.position.z)
 			if forward_backward_body_tilt_target.position.z < tilt_limit_back:
 				fall_direction = "backward"
 				atLimit = true
