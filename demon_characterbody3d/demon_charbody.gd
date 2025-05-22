@@ -2,7 +2,9 @@ extends CharacterBody3D
 @export var move_speed: float = 5.0
 @export var turn_speed: float = 1.0
 @export var ground_offset: float = 0
-@export var sprint_speed: float = 5
+@export var sprint_speed: float = 3.0
+@export var normal_sprint_speed: float = 3.0
+@export var after_fall_sprint_speed: float = 2.0
 @export var tilt_speed: float = 1.5
 @export var sprint_tilt_speed: float = 2.5
 @export var mass_offset_speed = 0.1
@@ -128,6 +130,7 @@ func get_up(root_ref):
 	atLimit = false
 	fallen = false
 	can_tilt = false
+	sprint_speed = after_fall_sprint_speed
 	lean_grace_timer.start()
 	#$stepTargetContainer.position = position
 	
@@ -140,6 +143,7 @@ func get_up(root_ref):
 	
 func _on_lean_grace_timer_timeout() -> void:
 	print("timeout!")
+	sprint_speed = lerp(after_fall_sprint_speed, normal_sprint_speed, 1)
 	can_tilt = true
 	
 func _sprint(delta):
