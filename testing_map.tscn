@@ -51,15 +51,21 @@ load_path = "res://.godot/imported/streak.png-3e758164b09f0012015b43aad18655fc.s
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lvs8"]
 blend_mode = 1
-diffuse_mode = 1
+cull_mode = 2
+shading_mode = 2
 disable_fog = true
 vertex_color_use_as_albedo = true
+albedo_color = Color(0.31185, 0.31185, 0.31185, 1)
 albedo_texture = SubResource("CompressedTexture2D_1puo1")
+emission_enabled = true
+emission = Color(0.00351917, 0.00351917, 0.00351916, 1)
+refraction_scale = -1.0
 use_particle_trails = true
 
 [sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_quy1o"]
 material = SubResource("StandardMaterial3D_2lvs8")
 size = 0.05
+sections = 2
 
 [node name="TestingMap" type="Node3D"]
 
