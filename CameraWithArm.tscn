@@ -4,6 +4,9 @@
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_g8ouv")
+follow_weight = 0.01
+randomStrength = 0.275
+shakeFade = 10.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.838718, 0.544566, 0, -0.544566, 0.838718, 1.19209e-07, 12.9558, 18.5208)

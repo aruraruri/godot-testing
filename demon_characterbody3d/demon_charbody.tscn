@@ -430,7 +430,7 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="HeadBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.00745097, 0.00598714, 0.999954, -0.653144, 0.757234, 0.000332902, -0.757197, -0.653116, 0.00955259, 0.00112918, 0.466516, -0.111752)
+transform = Transform3D(0.00745097, 0.00598724, 0.999954, -0.653144, 0.757234, 0.000332828, -0.757197, -0.653116, 0.00955265, 0.00112919, 0.466516, -0.111752)
 bone_name = "Head"
 bone_idx = 5
 
