@@ -9,7 +9,7 @@ randomStrength = 0.275
 shakeFade = 10.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.838718, 0.544566, 0, -0.544566, 0.838718, 1.19209e-07, 12.9558, 18.5208)
+transform = Transform3D(1, 0, 0, 0, 0.857167, 0.515038, 0, -0.515038, 0.857167, 1.19209e-07, 12.9558, 18.5208)
 fov = 14.2
 near = 0.006
 far = 2000.0
