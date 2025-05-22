@@ -1,0 +1,99 @@
+[gd_scene load_steps=16 format=3 uid="uid://c2atjr7ueed4n"]
+
+[ext_resource type="Texture2D" uid="uid://c236v3nt7toqd" path="res://streak.png" id="1_kwfd8"]
+[ext_resource type="Script" uid="uid://dpek1b2ombl1p" path="res://rain_follow.gd" id="2_ci28e"]
+[ext_resource type="Texture2D" uid="uid://bppdskvhw6tlh" path="res://drop_ring.png" id="3_agfoc"]
+
+[sub_resource type="Curve" id="Curve_kwfd8"]
+_data = [Vector2(0, 0.0117955), 0.0, 0.0, 0, 0, Vector2(0.142395, 0.507833), 0.0, 0.0, 0, 0, Vector2(0.252427, 0.00718021), 0.0, 0.0, 0, 0, Vector2(0.365696, 0.312663), 0.0, 0.0, 0, 0, Vector2(0.462783, 0.0156658), 0.0, 0.0, 0, 0, Vector2(0.527508, 0.193864), 0.0, 0.0, 0, 0, Vector2(0.760518, 0.0156658), 0.0, 0.0, 0, 0]
+point_count = 7
+
+[sub_resource type="CurveTexture" id="CurveTexture_ci28e"]
+curve = SubResource("Curve_kwfd8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_43xbk"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 20.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0.2, -1, 0)
+spread = 5.0
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+scale_min = 0.1
+alpha_curve = SubResource("CurveTexture_ci28e")
+collision_mode = 2
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci28e"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_kwfd8")
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_agfoc"]
+material = SubResource("StandardMaterial3D_ci28e")
+size = 0.05
+
+[sub_resource type="Curve" id="Curve_6wwtt"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.498382, 0.499347), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vy4dc"]
+curve = SubResource("Curve_6wwtt")
+
+[sub_resource type="Curve" id="Curve_baj4n"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_w4igq"]
+curve = SubResource("Curve_baj4n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5nvcl"]
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_curve = SubResource("CurveTexture_w4igq")
+alpha_curve = SubResource("CurveTexture_vy4dc")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qyfq5"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_agfoc")
+
+[sub_resource type="QuadMesh" id="QuadMesh_gf0xp"]
+material = SubResource("StandardMaterial3D_qyfq5")
+orientation = 1
+
+[node name="rain_area" type="Node3D"]
+
+[node name="rain" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.9989, 0)
+amount = 1000
+sub_emitter = NodePath("drops")
+lifetime = 1.6
+preprocess = 10.0
+fixed_fps = 60
+collision_base_size = 1.0
+visibility_aabb = AABB(-25, -30, -25, 50, 30, 50)
+trail_enabled = true
+trail_lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_43xbk")
+draw_pass_1 = SubResource("RibbonTrailMesh_agfoc")
+script = ExtResource("2_ci28e")
+
+[node name="drops" type="GPUParticles3D" parent="rain"]
+amount = 1000
+lifetime = 0.6
+fixed_fps = 60
+visibility_aabb = AABB(-25, -30, -25, 50, 30, 50)
+process_material = SubResource("ParticleProcessMaterial_5nvcl")
+draw_pass_1 = SubResource("QuadMesh_gf0xp")
+
+[node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="rain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
+size = Vector3(50, 30, 50)
