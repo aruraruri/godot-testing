@@ -520,3 +520,9 @@ target_position = Vector3(0, -20, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.099, 1.64847, 0.173309)
 light_energy = 0.3
 omni_range = 1.44069
+
+[node name="lean_grace_timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="lean_grace_timer" to="." method="_on_lean_grace_timer_timeout"]
