@@ -192,7 +192,7 @@ func _physics_process(delta: float) -> void:
 		
 		#var avg = (left_target.position + right_target.position) / 2
 		var target_pos = Vector3(fallRay.get_collision_point().x, fallRay.get_collision_point().y + ground_offset, fallRay.get_collision_point().z)
-		position.y = lerp(position.y, target_pos.y, 0.1)
+		position.y = lerp(position.y, target_pos.y, 0.2)
 		
 		_handle_movement(delta)
 		_handle_rotation(delta)
