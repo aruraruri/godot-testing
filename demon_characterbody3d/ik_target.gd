@@ -8,7 +8,7 @@ extends GodotIKEffector
 @export var walk_step_duration: float = 0.1
 @export var sprint_step_duration: float = 0.2
 @onready var demon_charbody: CharacterBody3D = $"../../../../.."
-@onready var player_step_sound: AudioStreamPlayer3D = $"../../../../../AudioStreamPlayer3D_playersteps"
+@onready var player_step_audio: AudioStreamPlayer3D = $"../../../../../AudioStreamPlayer3D_playersteps"
 @export var adjacent_target: GodotIKEffector
 
 var is_stepping := false
@@ -32,17 +32,17 @@ func step():
 	or !demon_charbody.left_foot_stable 
 	or !demon_charbody.right_foot_stable):
 		print("lowering pitch")
-		player_step_sound.pitch_scale = 0.2
-		player_step_sound.volume_db = 0.0
+		player_step_audio.pitch_scale = 0.2
+		player_step_audio.volume_db = 1.0
 	else:
-		player_step_sound.pitch_scale = 1.0
-		if (demon_charbody.sprinting):
-			player_step_sound.volume_db = 6.0
-		else:
-			player_step_sound.volume_db = -45.0
-	
-	# Play the step sound after pitching is done
-	player_step_sound.play()
+		player_step_audio.pitch_scale = 1.0
+		player_step_audio.volume_linear = 0.004
+		
+	if (demon_charbody.sprinting):
+		player_step_audio.volume_linear = 1.0
+		
+	# Play the step sound after pitching and vol setting6 is done
+	player_step_audio.play()
 	
 	# Step animation
 	var target_pos = step_target.global_position
