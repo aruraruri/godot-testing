@@ -36,7 +36,10 @@ func step():
 		player_step_sound.volume_db = 0.0
 	else:
 		player_step_sound.pitch_scale = 1.0
-		player_step_sound.volume_db = -45.0
+		if (demon_charbody.sprinting):
+			player_step_sound.volume_db = 6.0
+		else:
+			player_step_sound.volume_db = -45.0
 	
 	# Play the step sound after pitching is done
 	player_step_sound.play()
