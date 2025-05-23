@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://cm4ld720sg7ky"]
+[gd_scene load_steps=30 format=4 uid="uid://cm4ld720sg7ky"]
 
 [ext_resource type="Script" uid="uid://c5i4j8lmxinli" path="res://demon_characterbody3d/demon_charbody.gd" id="1_wbgx1"]
 [ext_resource type="Material" uid="uid://3mr1jyojeyt3" path="res://demon_characterbody3d/character_mat.tres" id="2_u3xtx"]
@@ -16,6 +16,11 @@
 [ext_resource type="AudioStream" uid="uid://dym8xb1w81bkr" path="res://audio/player/lamp_flicker_eyes3.ogg" id="12_jnps6"]
 [ext_resource type="AudioStream" uid="uid://df3bet8wnrlgb" path="res://audio/player/player_step3.ogg" id="12_xakph"]
 [ext_resource type="AudioStream" uid="uid://ciqhhwyd4qfap" path="res://audio/player/player_step4.ogg" id="13_eej81"]
+[ext_resource type="AudioStream" uid="uid://cbt4ncashdhwm" path="res://audio/player/fall1.ogg" id="17_jdrkx"]
+[ext_resource type="AudioStream" uid="uid://b4xj32r5xixnb" path="res://audio/player/fall2.ogg" id="18_00iw2"]
+[ext_resource type="AudioStream" uid="uid://nfgld1hpklh6" path="res://audio/player/fall3.ogg" id="19_8oga6"]
+[ext_resource type="AudioStream" uid="uid://chvgop6lbdqqt" path="res://audio/player/fall4.ogg" id="20_hi6w4"]
+[ext_resource type="AudioStream" uid="uid://byu0384w47p4l" path="res://audio/player/fall5.ogg" id="21_00iw2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ahfok"]
 
@@ -132,6 +137,14 @@ stream_1/stream = ExtResource("11_jnps6")
 stream_2/stream = ExtResource("12_xakph")
 stream_2/weight = 0.5
 stream_3/stream = ExtResource("13_eej81")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gm121"]
+streams_count = 5
+stream_0/stream = ExtResource("17_jdrkx")
+stream_1/stream = ExtResource("18_00iw2")
+stream_2/stream = ExtResource("19_8oga6")
+stream_3/stream = ExtResource("20_hi6w4")
+stream_4/stream = ExtResource("21_00iw2")
 
 [node name="DemonCharbody" type="CharacterBody3D"]
 collision_layer = 134217728
@@ -455,7 +468,7 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="HeadBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.00745091, 0.00598719, 0.999954, -0.653144, 0.757234, 0.000332839, -0.757197, -0.653116, 0.00955258, 0.0011292, 0.466516, -0.111752)
+transform = Transform3D(0.0074509, 0.00598719, 0.999954, -0.653144, 0.757234, 0.000332836, -0.757197, -0.653116, 0.00955257, 0.0011292, 0.466516, -0.111752)
 bone_name = "Head"
 bone_idx = 5
 
@@ -488,6 +501,7 @@ script = ExtResource("6_vaqlh")
 [node name="AudioStreamPlayer3D_playereyes" type="AudioStreamPlayer3D" parent="Armature/Skeleton3D/HeadBoneAttachment3D"]
 transform = Transform3D(0.00745091, -0.653144, -0.757197, 0.00598718, 0.757234, -0.653116, 0.999954, 0.000332823, 0.00955257, 0.90728, -1.2227, -0.000713549)
 stream = SubResource("AudioStreamRandomizer_mf7jk")
+volume_db = -9.0
 unit_size = 4000.0
 max_db = 5.0
 max_distance = 4096.0
@@ -560,11 +574,15 @@ one_shot = true
 
 [node name="AudioStreamPlayer3D_playersteps" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_eej81")
-volume_db = -54.323
+volume_db = -9.0
 unit_size = 4000.0
-max_db = 5.0
-pitch_scale = 0.6
 max_distance = 4096.0
 bus = &"PlayerSteps"
+
+[node name="AudioStreamPlayer3D_playerfall" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_gm121")
+unit_size = 4000.0
+max_distance = 4096.0
+bus = &"PlayerFall"
 
 [connection signal="timeout" from="lean_grace_timer" to="." method="_on_lean_grace_timer_timeout"]

@@ -21,6 +21,8 @@ extends CharacterBody3D
 
 @onready var fallRay: RayCast3D = $FallRayCast3D
 
+@onready var player_fall_audio: AudioStreamPlayer3D = $AudioStreamPlayer3D_playerfall
+
 
 @export var tilt_limit_back: float = -6.0
 #@export var tilt_limit_forwards: float = 2.0
@@ -128,6 +130,7 @@ func fall():
 		var forward_dir = -global_transform.basis.z.normalized()
 		var up_dir = fallRay.get_collision_normal().normalized() # terrains up dir
 		emit_signal("player_fall", velocity, fall_direction, forward_dir, up_dir)
+		player_fall_audio.play()
 
 	fallen = true
 	hide()
