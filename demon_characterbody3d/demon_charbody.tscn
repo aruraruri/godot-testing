@@ -124,11 +124,13 @@ radius = 0.257169
 height = 0.787998
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_eej81"]
-random_pitch = 1.2
+random_pitch = 1.5
+random_volume_offset_db = 1.0
 streams_count = 4
 stream_0/stream = ExtResource("10_j2t4j")
 stream_1/stream = ExtResource("11_jnps6")
 stream_2/stream = ExtResource("12_xakph")
+stream_2/weight = 0.5
 stream_3/stream = ExtResource("13_eej81")
 
 [node name="DemonCharbody" type="CharacterBody3D"]
@@ -453,7 +455,7 @@ settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
 [node name="HeadBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.00745092, 0.00598719, 0.999954, -0.653144, 0.757234, 0.000332852, -0.757197, -0.653116, 0.00955259, 0.0011292, 0.466516, -0.111752)
+transform = Transform3D(0.00745091, 0.00598719, 0.999954, -0.653144, 0.757234, 0.00033284, -0.757197, -0.653116, 0.00955258, 0.0011292, 0.466516, -0.111752)
 bone_name = "Head"
 bone_idx = 5
 
@@ -489,7 +491,7 @@ stream = SubResource("AudioStreamRandomizer_mf7jk")
 unit_size = 4000.0
 max_db = 5.0
 max_distance = 4096.0
-bus = &"Player"
+bus = &"PlayerEyes"
 
 [node name="CustomBoneAttachmentL" type="Node3D" parent="Armature/Skeleton3D" node_paths=PackedStringArray("skeleton")]
 script = ExtResource("6_47ywq")
@@ -561,6 +563,6 @@ stream = SubResource("AudioStreamRandomizer_eej81")
 unit_size = 4000.0
 max_db = 5.0
 max_distance = 4096.0
-bus = &"Player"
+bus = &"PlayerSteps"
 
 [connection signal="timeout" from="lean_grace_timer" to="." method="_on_lean_grace_timer_timeout"]

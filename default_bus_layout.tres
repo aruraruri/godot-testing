@@ -1,15 +1,17 @@
-[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://c7tsbe1t302c8"]
+[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://c7tsbe1t302c8"]
 
 [sub_resource type="AudioEffectEQ10" id="AudioEffectEQ10_j3pel"]
 resource_name = "EQ10"
 band_db/31_hz = -60.0
-band_db/125_hz = 9.6
-band_db/250_hz = -27.3
-band_db/500_hz = -22.1
+band_db/62_hz = -60.0
+band_db/125_hz = -60.0
+band_db/250_hz = -60.0
+band_db/500_hz = -60.0
 band_db/1000_hz = -19.7
-band_db/2000_hz = 2.6
-band_db/8000_hz = -38.6
-band_db/16000_hz = -38.2
+band_db/2000_hz = -3.6
+band_db/4000_hz = 1.0
+band_db/8000_hz = -28.5
+band_db/16000_hz = -60.0
 
 [sub_resource type="AudioEffectStereoEnhance" id="AudioEffectStereoEnhance_j3pel"]
 resource_name = "StereoEnhance"
@@ -32,6 +34,17 @@ band_db/4000_hz = 1.5
 band_db/8000_hz = -9.6
 band_db/16000_hz = -19.9
 
+[sub_resource type="AudioEffectEQ21" id="AudioEffectEQ21_j3pel"]
+resource_name = "EQ21"
+band_db/22_hz = -60.0
+band_db/32_hz = -60.0
+band_db/44_hz = -60.0
+band_db/63_hz = -60.0
+band_db/90_hz = -60.0
+band_db/11000_hz = -7.3
+band_db/16000_hz = -19.9
+band_db/22000_hz = -38.7
+
 [resource]
 bus/1/name = &"Rain"
 bus/1/solo = false
@@ -43,13 +56,21 @@ bus/1/effect/0/effect = SubResource("AudioEffectEQ10_j3pel")
 bus/1/effect/0/enabled = true
 bus/1/effect/1/effect = SubResource("AudioEffectStereoEnhance_j3pel")
 bus/1/effect/1/enabled = true
-bus/2/name = &"Player"
+bus/2/name = &"PlayerSteps"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
-bus/2/volume_db = 0.00282288
+bus/2/volume_db = -1.71701
 bus/2/send = &"Master"
 bus/2/effect/0/effect = SubResource("AudioEffectCompressor_j3pel")
 bus/2/effect/0/enabled = true
 bus/2/effect/1/effect = SubResource("AudioEffectEQ10_g28q7")
 bus/2/effect/1/enabled = true
+bus/3/name = &"PlayerEyes"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -2.11474
+bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectEQ21_j3pel")
+bus/3/effect/0/enabled = true
