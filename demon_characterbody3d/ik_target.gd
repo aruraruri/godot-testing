@@ -1,5 +1,7 @@
 extends GodotIKEffector
 
+# THIS CLASS IS RESPONSIBLE FOR PLAYER STEPPING
+
 @export var step_target: Node3D
 @export var walk_step_distance: float = 0.5
 @export var sprint_step_distance: float = 1.0
@@ -15,7 +17,6 @@ var is_stepping := false
 func step_over():
 	is_stepping = false
 	
-	
 func _process(_delta):
 	if demon_charbody.sprinting:
 		if !is_stepping && !adjacent_target.is_stepping && abs(global_position.distance_to(step_target.global_position)) > sprint_step_distance:
@@ -25,19 +26,22 @@ func _process(_delta):
 		step()
 
 func step():
-	# Dynamic sound pitching if ground is not good under player
+	# Dynamic step sound volume and pitching if ground is not good under player
 	if (!demon_charbody.left_foot_on_ground 
 	or !demon_charbody.right_foot_on_ground 
 	or !demon_charbody.left_foot_stable 
 	or !demon_charbody.right_foot_stable):
 		print("lowering pitch")
 		player_step_sound.pitch_scale = 0.2
+		player_step_sound.volume_db = 0.0
 	else:
 		player_step_sound.pitch_scale = 1.0
+		player_step_sound.volume_db = -45.0
 	
 	# Play the step sound after pitching is done
 	player_step_sound.play()
 	
+	# Step animation
 	var target_pos = step_target.global_position
 	var half_way = (global_position + step_target.global_position) / 2
 	is_stepping = true
