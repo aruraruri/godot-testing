@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bonqdxr5kccx4"]
+[gd_scene load_steps=19 format=3 uid="uid://bonqdxr5kccx4"]
 
 [ext_resource type="PackedScene" uid="uid://cqlj8o10f676w" path="res://basic_ahh_box.tscn" id="2_ah52j"]
 [ext_resource type="PackedScene" uid="uid://duhwn1fyobuyl" path="res://hilltest.blend" id="4_1puo1"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bgfywu6e5ivme" path="res://fpsCounter.tscn" id="6_53ovy"]
 [ext_resource type="PackedScene" uid="uid://cbkq3m4q5lubo" path="res://CameraWithArm.tscn" id="7_1puo1"]
 [ext_resource type="PackedScene" uid="uid://c2atjr7ueed4n" path="res://rain.tscn" id="7_2lvs8"]
+[ext_resource type="AudioStream" uid="uid://ogeigk5w2c0t" path="res://audio/enviro/long_med_freq_heavy_rain_0_45.ogg" id="8_2lvs8"]
 
 [sub_resource type="Gradient" id="Gradient_2lvs8"]
 colors = PackedColorArray(0.214578, 0.140038, 0.647056, 1, 0.748904, 0.846725, 0.93022, 1)
@@ -76,7 +77,7 @@ compositor = SubResource("Compositor_7od4i")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-1.91566e-08, 0.766044, -0.642788, 2.28299e-08, 0.642788, 0.766044, 1, 0, -2.98023e-08, 2.55827e-07, 6, -13.3545)
-light_energy = 0.03
+light_energy = 0.005
 shadow_enabled = true
 
 [node name="Node3D" parent="." instance=ExtResource("2_ah52j")]
@@ -129,5 +130,10 @@ offset = Vector3(0, 20, -15)
 
 [node name="drops" parent="rain_area/rain" index="0"]
 amount = 10000
+
+[node name="AudioStreamPlayerRain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_2lvs8")
+autoplay = true
+bus = &"Rain"
 
 [editable path="rain_area"]

@@ -6,6 +6,7 @@ extends SpotLight3D
 @onready var omni_light_3d_eyes: OmniLight3D = $"../OmniLight3D_Eyes"
 @onready var right_eye: MeshInstance3D = $"../RightEye"
 @onready var left_eye: MeshInstance3D = $"../LeftEye"
+@onready var blink_audio: AudioStreamPlayer3D = $"../AudioStreamPlayer3D_playereyes"
 
 
 var flickering: bool = false
@@ -24,6 +25,7 @@ func _process(delta):
 			flicker_timer = 0.0
 	else:
 		if randf() < flicker_chance * delta:
+			blink_audio.play()
 			visible = false
 			omni_light_3d_eyes.visible = false
 			right_eye.hide()
