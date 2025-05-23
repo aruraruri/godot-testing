@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqxv0q0jba1l3"
-path="res://.godot/imported/icon_godot_ik_constraint.svg-97c7cb8d54b913d987537209bf83e71b.ctex"
+path="res://.godot/imported/icon_godot_ik_constraint.svg-ded7542dab7643cdaa82e291ec388833.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/godot-ik-plugin/addons/libik/icons/icon_godot_ik_constraint.svg"
-dest_files=["res://.godot/imported/icon_godot_ik_constraint.svg-97c7cb8d54b913d987537209bf83e71b.ctex"]
+source_file="res://addons/libik/icons/icon_godot_ik_constraint.svg"
+dest_files=["res://.godot/imported/icon_godot_ik_constraint.svg-ded7542dab7643cdaa82e291ec388833.ctex"]
 
 [params]
 
