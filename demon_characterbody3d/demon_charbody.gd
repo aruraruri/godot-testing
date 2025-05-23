@@ -28,6 +28,10 @@ extends CharacterBody3D
 @export var tilt_limit_right: float = 2.5
 @export var tilt_limit_left: float = -2.5
 @export var tilt_recovery_lerp_weight = 0.008
+var left_foot_stable: bool = true
+var right_foot_stable: bool = true
+var left_foot_on_ground: bool = true
+var right_foot_on_ground: bool = true
 var can_tilt: bool = true
 var atLimit: bool = false
 var fall_direction: String
@@ -43,7 +47,7 @@ func _ready() -> void:
 	#print(ragdoll)
 	ragdoll.bones_sleep.connect(get_up)
 	
-func ground_angle_walkable(normal: Vector3):
+func is_ground_angle_walkable(normal: Vector3):
 	var difference = normal.dot(Vector3.UP)
 	#print(difference)
 	if (difference > 0.80):
@@ -51,17 +55,21 @@ func ground_angle_walkable(normal: Vector3):
 	else:
 		return false
 	
-func _handle_tilt(delta: float):
+func _handle_tilt(delta: float): 
+	left_foot_stable = is_ground_angle_walkable(LfootCast.get_collision_normal())
+	right_foot_stable = is_ground_angle_walkable(RfootCast.get_collision_normal())
+	left_foot_on_ground = LfootCast.is_colliding()
+	right_foot_on_ground = RfootCast.is_colliding()
 	
 	# recover balance if both feet are on the ground and the ground is even enough
-	if (LfootCast.is_colliding() and RfootCast.is_colliding() and ground_angle_walkable(LfootCast.get_collision_normal()) and ground_angle_walkable(RfootCast.get_collision_normal())):
+	if (left_foot_on_ground and right_foot_on_ground and left_foot_stable and right_foot_stable):
 		# TILT RECOVERY WEIGHT with HARD-CODED ZERO OUT POS
 		sideways_tilt_target.position.y = lerp(sideways_tilt_target.position.y, 0.0, tilt_recovery_lerp_weight)
 		forwards_tilt_target.position.z = lerp(forwards_tilt_target.position.z, -1.0, tilt_recovery_lerp_weight)
 		#print("feet on ground")
 		
 	# make sure foot raycasts are always pointing downwards
-	if (!LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())) && can_tilt:
+	if (!left_foot_on_ground or !left_foot_stable) && can_tilt:
 		#print("left foot off ground")
 
 		if sideways_tilt_target.position.y < tilt_limit_left:
@@ -75,7 +83,7 @@ func _handle_tilt(delta: float):
 			
 	
 
-	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal())) && can_tilt:
+	if (!right_foot_on_ground or !right_foot_stable) && can_tilt:
 		#print("right foot off ground")
 		
 
@@ -91,7 +99,7 @@ func _handle_tilt(delta: float):
 			
 			
 			
-	if (!RfootCast.is_colliding() or !ground_angle_walkable(RfootCast.get_collision_normal()) and !LfootCast.is_colliding() or !ground_angle_walkable(LfootCast.get_collision_normal())) && can_tilt:
+	if (!right_foot_on_ground or !right_foot_stable and !left_foot_on_ground or !left_foot_stable) && can_tilt:
 		# neither feet not on ground nor walkable ground angle
 		#print(forwards_tilt_target.position.z)
 		if forwards_tilt_target.position.z < tilt_limit_back:

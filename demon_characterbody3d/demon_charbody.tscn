@@ -562,6 +562,7 @@ one_shot = true
 stream = SubResource("AudioStreamRandomizer_eej81")
 unit_size = 4000.0
 max_db = 5.0
+pitch_scale = 0.6
 max_distance = 4096.0
 bus = &"PlayerSteps"
 

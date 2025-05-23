@@ -25,11 +25,22 @@ func _process(_delta):
 		step()
 
 func step():
+	# Dynamic sound pitching if ground is not good under player
+	if (!demon_charbody.left_foot_on_ground 
+	or !demon_charbody.right_foot_on_ground 
+	or !demon_charbody.left_foot_stable 
+	or !demon_charbody.right_foot_stable):
+		print("lowering pitch")
+		player_step_sound.pitch_scale = 0.2
+	else:
+		player_step_sound.pitch_scale = 1.0
+	
+	# Play the step sound after pitching is done
 	player_step_sound.play()
+	
 	var target_pos = step_target.global_position
 	var half_way = (global_position + step_target.global_position) / 2
 	is_stepping = true
-	player_step_sound.play()
 	
 	var t = get_tree().create_tween()
 	# vec3 is the step height for tweening
