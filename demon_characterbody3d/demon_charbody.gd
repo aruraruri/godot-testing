@@ -1,7 +1,7 @@
 extends CharacterBody3D
 @export var move_speed: float = 5.0
 @export var turn_speed: float = 1.0
-@export var ground_offset: float = 0
+@export var ground_offset: float = -0.12
 @export var sprint_speed: float = 3.0
 @export var normal_sprint_speed: float = 3.0
 @export var after_fall_sprint_speed: float = 2.0
@@ -136,8 +136,14 @@ func fall():
 	hide()
 
 # reference to PhysicalBones root from signal
-func get_up(root_ref):
+func get_up(root_ref, ragdoll_poses):
 	position = root_ref.position
+	
+	# Re-enable IK
+	left_target.active = true
+	right_target.active = true
+	
+	# Reset variables
 	forward_backward_body_tilt_target.position.z = 0.0
 	sideways_tilt_target.position.y = 0
 	forwards_tilt_target.position.z = 0
@@ -146,14 +152,18 @@ func get_up(root_ref):
 	can_tilt = false
 	sprint_speed = after_fall_sprint_speed
 	lean_grace_timer.start()
-	#$stepTargetContainer.position = position
-	
+
+	# Force IK update
 	left_target.force_foot_to_target()
 	right_target.force_foot_to_target()
 	left_target.step()
 	right_target.step()
 	
 	show()
+	
+	
+	
+	
 	
 func _on_lean_grace_timer_timeout() -> void:
 	print("timeout!")
@@ -197,14 +207,58 @@ func _handle_rotation(delta):
 	if (look_dir):
 		rotation.y = lerp_angle(rotation.y, target_angle, turn_speed * delta)
 
+@export var trip_velocity_threshold: float = 2.0  # How fast y-position must change to trip
+@export var trip_cooldown: float = 1.0  # Minimum time between trips
+var last_trip_time: float = 0.0
+var previous_y_pos: float = 0.0
+var y_velocity: float = 0.0
+var y_positions_buffer: Array[float] = []
+const BUFFER_SIZE: int = 5
+
+func _handle_tripping(delta, target_pos: Vector3):
+	# Update buffer with recent y positions
+	y_positions_buffer.push_back(target_pos.y)
+	if y_positions_buffer.size() > BUFFER_SIZE:
+		y_positions_buffer.pop_front()
+	
+	# Calculate average velocity over the buffer
+	if y_positions_buffer.size() >= 2:
+		var total_change = 0.0
+		for i in range(1, y_positions_buffer.size()):
+			total_change += abs(y_positions_buffer[i] - y_positions_buffer[i-1])
+		y_velocity = total_change / (y_positions_buffer.size() - 1) / delta
+		
+		# Check for trip conditions
+		if can_tilt and !fallen and Time.get_ticks_msec() / 1000.0 - last_trip_time > trip_cooldown:
+			# Only trip if velocity is downward and exceeds threshold
+			if y_velocity > trip_velocity_threshold and target_pos.y < previous_y_pos:
+				# Additional check to prevent tripping when walking off edges
+				var is_edge = (
+					LfootCast.is_colliding() and 
+					RfootCast.is_colliding() and 
+					is_ground_angle_walkable(LfootCast.get_collision_normal()) and 
+					is_ground_angle_walkable(RfootCast.get_collision_normal())
+				)
+				
+				if !is_edge:
+					fall_direction = "forward"  # Default forward trip
+					fall()
+					last_trip_time = Time.get_ticks_msec() / 1000.0
+	
+	previous_y_pos = target_pos.y
+
+func _handle_y_position(delta, target_pos):
+	position.y = lerp(position.y, target_pos.y, 0.2)
+
 func _physics_process(delta: float) -> void:
 	if !fallen:
 		#height setting with ik targets
-		
+		var fall_ray_target_pos = Vector3(fallRay.get_collision_point().x, fallRay.get_collision_point().y + ground_offset, fallRay.get_collision_point().z)
 		#var avg = (left_target.position + right_target.position) / 2
-		var target_pos = Vector3(fallRay.get_collision_point().x, fallRay.get_collision_point().y + ground_offset, fallRay.get_collision_point().z)
-		position.y = lerp(position.y, target_pos.y, 0.2)
 		
+		
+		_handle_y_position(delta, fall_ray_target_pos)
+		_handle_tripping(delta, fall_ray_target_pos)
 		_handle_movement(delta)
 		_handle_rotation(delta)
 		_handle_tilt(delta)

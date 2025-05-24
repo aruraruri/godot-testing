@@ -9,6 +9,14 @@ var active_bones: Array[Node] = []
 @onready var impulse_ray_right: RayCast3D = $impulseRight
 @export var sweep_strenght: float = 200.0
 
+@onready var ragdoll_skeleton: Skeleton3D = $Armature/Skeleton3D
+var character_skeleton: Skeleton3D
+
+@export var pose_blend_duration := 0.5  # Seconds to blend between poses
+var pose_blend_timer := 0.0
+var is_blending_pose := false
+var pre_blend_poses := {}  # Dictionary to store initial poses
+
 signal bones_sleep
 
 func _ready() -> void:
@@ -18,11 +26,42 @@ func _ready() -> void:
 	# connect to character fall signal
 	character = get_tree().get_root().get_node("TestingMap/DemonCharbody")
 	character.player_fall.connect(handle_fall)
+	character_skeleton = character.get_node("Armature/Skeleton3D")  # Adjust path as needed
+
+func copy_skeleton_pose(immediate: bool = false):
+	if ragdoll_skeleton.get_bone_count() != character_skeleton.get_bone_count():
+		push_warning("Skeleton bone counts don't match!")
+		return
 	
-	
+	if immediate:
+		# Immediate copy without blending
+		for bone_idx in ragdoll_skeleton.get_bone_count():
+			var bone_pose = character_skeleton.get_bone_pose(bone_idx)
+			ragdoll_skeleton.set_bone_pose_position(bone_idx, bone_pose.origin)
+			ragdoll_skeleton.set_bone_pose_rotation(bone_idx, bone_pose.basis.get_rotation_quaternion())
+			ragdoll_skeleton.set_bone_pose_scale(bone_idx, bone_pose.basis.get_scale())
+	else:
+		# Start blending process
+		pre_blend_poses.clear()
+		for bone_idx in ragdoll_skeleton.get_bone_count():
+			pre_blend_poses[bone_idx] = {
+				"position": ragdoll_skeleton.get_bone_pose_position(bone_idx),
+				"rotation": ragdoll_skeleton.get_bone_pose_rotation(bone_idx),
+				"scale": ragdoll_skeleton.get_bone_pose_scale(bone_idx)
+			}
+		pose_blend_timer = 0.0
+		is_blending_pose = true
+
 func handle_fall(velocity, fall_direction, forward_dir, up_dir) -> void:
 	print("FALL TRIGGERED FROM player_fall SIGNAL")
 	set_physics_process(true)
+	
+	# Start with immediate pose copy from character
+	copy_skeleton_pose(true)
+	
+	# Then initiate blending to current character pose
+	copy_skeleton_pose(false)
+	
 	# transfer ragdoll over to player
 	global_transform = character.transform
 	
@@ -68,8 +107,6 @@ func handle_fall(velocity, fall_direction, forward_dir, up_dir) -> void:
 			active_bones[9].apply_central_impulse(backward_dir * sweep_strenght)
 			active_bones[11].apply_central_impulse(backward_dir * sweep_strenght)
 	
-
-	
 func _physics_process(delta: float) -> void:
 	
 	#CHECKING WHEN ALL BONES GO TO SLEEP -> fire signal to player controller to rise
@@ -81,11 +118,25 @@ func _physics_process(delta: float) -> void:
 			active_bones.remove_at(i)
 	
 	# MAYBE WANT!!! to have a threshold instead -> over half of bones sleeping = bones_sleep
+	# Bone sleep checking
 	if active_bones.is_empty():
-		emit_signal("bones_sleep", root_ref)
-		print("the bones sleep...")
-		physics_bones.physical_bones_stop_simulation()
-		hide()
-		set_physics_process(false)
+		# Force skeleton update before copying pose
+		ragdoll_skeleton.skeleton_updated.connect(_on_skeleton_updated, CONNECT_ONE_SHOT)
 		
+	
+	
+func _on_skeleton_updated():
+	
+	# 1. Store the ragdoll's final pose
+	var ragdoll_poses = {}
+	for bone_idx in ragdoll_skeleton.get_bone_count():
+		ragdoll_poses[bone_idx] = {
+			"position": ragdoll_skeleton.get_bone_pose_position(bone_idx),
+			"rotation": ragdoll_skeleton.get_bone_pose_rotation(bone_idx),
+			"scale": ragdoll_skeleton.get_bone_pose_scale(bone_idx)
+		}
+	
+	emit_signal("bones_sleep", root_ref, ragdoll_poses)
+	hide()
+	set_physics_process(false)
 	

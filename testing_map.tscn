@@ -101,6 +101,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.2037, 5.25101, 0.0106316)
 [node name="Node3D5" parent="." instance=ExtResource("2_ah52j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.69372, 0.0999997, 2.31652)
 
+[node name="Node3D6" parent="." instance=ExtResource("2_ah52j")]
+transform = Transform3D(0.176924, 0, 0, 0, 1, 0, 0, 0, 2.60401, 4.53217, -0.0738549, 2.64305)
+
 [node name="DemonCharbody" parent="." instance=ExtResource("4_h1f8r")]
 motion_mode = 0
 wall_min_slide_angle = 0.0174533
@@ -109,6 +112,8 @@ floor_block_on_wall = false
 turn_speed = 3.0
 sprint_tilt_speed = 3.5
 tilt_recovery_lerp_weight = 0.01
+trip_velocity_threshold = 7.0
+trip_cooldown = 2.0
 
 [node name="FpsCounter" parent="." instance=ExtResource("6_53ovy")]
 

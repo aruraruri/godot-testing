@@ -31,7 +31,7 @@ func step():
 	or !demon_charbody.right_foot_on_ground 
 	or !demon_charbody.left_foot_stable 
 	or !demon_charbody.right_foot_stable):
-		print("lowering pitch")
+		#print("lowering pitch")
 		player_step_audio.pitch_scale = 0.2
 		player_step_audio.volume_db = 1.0
 	else:
