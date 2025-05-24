@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bppdskvhw6tlh"
-path.s3tc="res://.godot/imported/drop_ring.png-090d47ee620e8d2b3bb5cc751026448f.s3tc.ctex"
+uid="uid://c236v3nt7toqd"
+path.s3tc="res://.godot/imported/streak.png-4298c9241fa9d77baab23823dc0250e9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://drop_ring.png"
-dest_files=["res://.godot/imported/drop_ring.png-090d47ee620e8d2b3bb5cc751026448f.s3tc.ctex"]
+source_file="res://art/FX/rain/streak.png"
+dest_files=["res://.godot/imported/streak.png-4298c9241fa9d77baab23823dc0250e9.s3tc.ctex"]
 
 [params]
 

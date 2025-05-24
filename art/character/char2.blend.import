@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://duhwn1fyobuyl"
-path="res://.godot/imported/hilltest.blend-8fa4b2478008e845ab84ac7009c51ab1.scn"
+uid="uid://c60qoy5kseqyi"
+path="res://.godot/imported/char2.blend-d114934d51a3d1b56628f1f0e4d3c1ab.scn"
 
 [deps]
 
-source_file="res://hilltest.blend"
-dest_files=["res://.godot/imported/hilltest.blend-8fa4b2478008e845ab84ac7009c51ab1.scn"]
+source_file="res://art/character/char2.blend"
+dest_files=["res://.godot/imported/char2.blend-d114934d51a3d1b56628f1f0e4d3c1ab.scn"]
 
 [params]
 

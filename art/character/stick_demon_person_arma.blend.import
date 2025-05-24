@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c60qoy5kseqyi"
-path="res://.godot/imported/char2.blend-335eec3bbd37638409892ccf0dcba24d.scn"
+uid="uid://cksh1myx2dy7t"
+path="res://.godot/imported/stick_demon_person_arma.blend-11205f3ec28d0fb9324eca2077eabf17.scn"
 
 [deps]
 
-source_file="res://char2.blend"
-dest_files=["res://.godot/imported/char2.blend-335eec3bbd37638409892ccf0dcba24d.scn"]
+source_file="res://art/character/stick_demon_person_arma.blend"
+dest_files=["res://.godot/imported/stick_demon_person_arma.blend-11205f3ec28d0fb9324eca2077eabf17.scn"]
 
 [params]
 

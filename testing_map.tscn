@@ -1,12 +1,12 @@
 [gd_scene load_steps=19 format=3 uid="uid://bonqdxr5kccx4"]
 
-[ext_resource type="PackedScene" uid="uid://cqlj8o10f676w" path="res://basic_ahh_box.tscn" id="2_ah52j"]
-[ext_resource type="PackedScene" uid="uid://duhwn1fyobuyl" path="res://hilltest.blend" id="4_1puo1"]
+[ext_resource type="PackedScene" uid="uid://cqlj8o10f676w" path="res://art/placeholders/basic_ahh_box.tscn" id="2_ah52j"]
+[ext_resource type="PackedScene" uid="uid://duhwn1fyobuyl" path="res://art/placeholders/hilltest.blend" id="4_1puo1"]
 [ext_resource type="PackedScene" uid="uid://cm4ld720sg7ky" path="res://demon_characterbody3d/demon_charbody.tscn" id="4_h1f8r"]
 [ext_resource type="PackedScene" uid="uid://v71cfai18q6w" path="res://demon_ragdollmode/demon_ragdoll.tscn" id="5_ah52j"]
-[ext_resource type="PackedScene" uid="uid://bgfywu6e5ivme" path="res://fpsCounter.tscn" id="6_53ovy"]
+[ext_resource type="PackedScene" uid="uid://bgfywu6e5ivme" path="res://utils/fpsCounter.tscn" id="6_53ovy"]
 [ext_resource type="PackedScene" uid="uid://cbkq3m4q5lubo" path="res://CameraWithArm.tscn" id="7_1puo1"]
-[ext_resource type="PackedScene" uid="uid://c2atjr7ueed4n" path="res://rain.tscn" id="7_2lvs8"]
+[ext_resource type="PackedScene" uid="uid://c2atjr7ueed4n" path="res://art/FX/rain/rain.tscn" id="7_2lvs8"]
 [ext_resource type="AudioStream" uid="uid://ogeigk5w2c0t" path="res://audio/enviro/long_med_freq_heavy_rain_0_45.ogg" id="8_2lvs8"]
 
 [sub_resource type="Gradient" id="Gradient_2lvs8"]

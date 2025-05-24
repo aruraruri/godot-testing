@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://ccc1y6igt31gn"
-path="res://.godot/imported/char1_arma.blend-855446748d879f74d90de5c31359304e.scn"
+path="res://.godot/imported/char1_arma.blend-76154b94d9697a6da9e1c62605f57641.scn"
 
 [deps]
 
-source_file="res://char1_arma.blend"
-dest_files=["res://.godot/imported/char1_arma.blend-855446748d879f74d90de5c31359304e.scn"]
+source_file="res://DELETE_DIS/char1_arma.blend"
+dest_files=["res://.godot/imported/char1_arma.blend-76154b94d9697a6da9e1c62605f57641.scn"]
 
 [params]
 

@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://c2atjr7ueed4n"]
 
-[ext_resource type="Texture2D" uid="uid://c236v3nt7toqd" path="res://streak.png" id="1_kwfd8"]
-[ext_resource type="Script" uid="uid://dpek1b2ombl1p" path="res://rain_follow.gd" id="2_ci28e"]
-[ext_resource type="Texture2D" uid="uid://bppdskvhw6tlh" path="res://drop_ring.png" id="3_agfoc"]
+[ext_resource type="Texture2D" uid="uid://c236v3nt7toqd" path="res://art/FX/rain/streak.png" id="1_kwfd8"]
+[ext_resource type="Script" uid="uid://dpek1b2ombl1p" path="res://art/FX/rain/rain_follow.gd" id="2_ci28e"]
+[ext_resource type="Texture2D" uid="uid://bppdskvhw6tlh" path="res://art/FX/rain/drop_ring.png" id="3_agfoc"]
 
 [sub_resource type="Curve" id="Curve_kwfd8"]
 _data = [Vector2(0, 0.0117955), 0.0, 0.0, 0, 0, Vector2(0.142395, 0.507833), 0.0, 0.0, 0, 0, Vector2(0.252427, 0.00718021), 0.0, 0.0, 0, 0, Vector2(0.365696, 0.312663), 0.0, 0.0, 0, 0, Vector2(0.462783, 0.0156658), 0.0, 0.0, 0, 0, Vector2(0.527508, 0.193864), 0.0, 0.0, 0, 0, Vector2(0.760518, 0.0156658), 0.0, 0.0, 0, 0]

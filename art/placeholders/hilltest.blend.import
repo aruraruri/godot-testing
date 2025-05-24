@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cksh1myx2dy7t"
-path="res://.godot/imported/stick_demon_person_arma.blend-533215dba90e2b444af1cdc53ddad184.scn"
+uid="uid://duhwn1fyobuyl"
+path="res://.godot/imported/hilltest.blend-7fc1e5bb3fc31411d6be62f1d0407c2d.scn"
 
 [deps]
 
-source_file="res://stick_demon_person_arma.blend"
-dest_files=["res://.godot/imported/stick_demon_person_arma.blend-533215dba90e2b444af1cdc53ddad184.scn"]
+source_file="res://art/placeholders/hilltest.blend"
+dest_files=["res://.godot/imported/hilltest.blend-7fc1e5bb3fc31411d6be62f1d0407c2d.scn"]
 
 [params]
 

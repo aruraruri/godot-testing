@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://djm2cyv8isoy1"]
 
-[ext_resource type="Script" uid="uid://bqa785j4wxe8r" path="res://LabelScript.cs" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://bqa785j4wxe8r" path="res://DELETE_DIS/LabelScript.cs" id="1_wtcfe"]
 
 [node name="Node2D" type="Node2D"]
 

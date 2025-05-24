@@ -15,6 +15,10 @@ run/main_scene="uid://bonqdxr5kccx4"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://audio/default_bus_layout.tres"
+
 [dotnet]
 
 project/assembly_name="learning project"
