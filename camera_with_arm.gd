@@ -2,7 +2,8 @@ extends Node3D
 
 @export var follow_weight: float = 1.6
 @export var character: CharacterBody3D  
-@export var ragdoll: Node3D  
+@export var ragdoll: Node3D
+@export	var fall_z_centering_offset: float = 2.0  
 
 @export var randomStrength: float = 30.0
 @export var shakeFade: float = 5.0
@@ -79,13 +80,12 @@ func _process(delta: float) -> void:
 	adjust_zoom(delta)
 	
 	if is_player_down:
-		global_position = global_position.lerp(ragdoll_target_pos, follow_weight)
+		global_position = global_position.lerp(Vector3(ragdoll_target_pos.x, ragdoll_target_pos.y, ragdoll_target_pos.z + fall_z_centering_offset), follow_weight*2)
 
 func adjust_zoom(delta: float):
 	var target_fov: float
 	
 	if is_player_down:
-		# When player is down, use a middle FOV
 		target_fov = lerp(default_fov, max_zoom_in_fov, 0.5)
 	else:
 		# Calculate zoom based on tilt amount (more tilt = more zoom out)
